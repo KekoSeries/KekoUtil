@@ -29,12 +29,12 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.logging.Level;
-import jdk.internal.jline.internal.Nullable;
 import lombok.experimental.UtilityClass;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @UtilityClass
 public class TaskUtilities {
