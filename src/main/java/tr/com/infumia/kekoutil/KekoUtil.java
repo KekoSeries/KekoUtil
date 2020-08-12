@@ -39,7 +39,7 @@ public abstract class KekoUtil extends JavaPlugin {
     }
 
     static void setInventory(@NotNull final SmartInventory inventory) {
-        if (Optional.ofNullable(KekoUtil.instance).isPresent()) {
+        if (Optional.ofNullable(KekoUtil.inventory).isPresent()) {
             throw new IllegalStateException("You can't use KekoUtil#setInstance method twice!");
         }
         synchronized (KekoUtil.LOCK) {
