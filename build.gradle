@@ -59,6 +59,12 @@ dependencies {
     implementation("io.github.portlek:bukkit-version:1.3")
     implementation("io.github.portlek:version-matched:2.6")
     implementation("io.github.portlek:mapentry:1.2")
+    implementation("io.github.portlek:replaceable:1.2")
+    implementation("io.github.portlek:reflection:3.2")
+    implementation("io.github.portlek:version:1.2")
+    implementation("me.carleslc.Simple-YAML:Simple-Configuration:1.7.1")
+    implementation("me.carleslc.Simple-YAML:Simple-Yaml:1.7.1")
+    implementation("io.github.portlek:jsongration:1.3")
     implementation("com.github.WesJD.AnvilGUI:anvilgui:master-SNAPSHOT")
     implementation("io.github.bananapuncher714:NBTEditor:7.16")
     implementation("com.zaxxer:HikariCP:3.4.5")
@@ -82,6 +88,7 @@ dependencies {
 }
 
 shadowJar {
+    relocate('org.yaml', this.group + ".kekoutil.snakeyaml")
     setArchivesBaseName(this.name)
     archiveClassifier.set("")
     archiveVersion.set("")
