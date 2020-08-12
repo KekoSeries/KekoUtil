@@ -88,7 +88,6 @@ dependencies {
 }
 
 shadowJar {
-    relocate('org.yaml', this.group + ".kekoutil.snakeyaml")
     setArchivesBaseName(this.name)
     archiveClassifier.set("")
     archiveVersion.set("")
