@@ -1,12 +1,32 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
+
 plugins {
     id 'java'
     id 'maven-publish'
     id 'kr.entree.spigradle' version '2.1.1'
     id 'com.github.johnrengelman.shadow' version '6.0.0'
+    id 'io.codearte.nexus-staging' version '0.21.2'
+}
+
+apply plugin: 'com.bmuschko.nexus'
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+javadoc {
+    options.encoding = 'UTF-8'
 }
 
 group = "tr.com.infumia"
-version = "1.0"
+version = this.kekoutilVersion
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
@@ -71,4 +91,50 @@ spigot {
     apiVersion = "1.13"
     authors = ["infumia"]
     softDepends = ["Vault", "LuckPerms", "PlaceholderAPI"]
+}
+
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+}
+
+nexusStaging {
+    packageGroup = this.group
+}
+
+task gradleVersion(type: Wrapper) {
+    gradleVersion = '6.5.1'
+}
+
+modifyPom {
+    project {
+        name 'kekoutil'
+        description 'A library that provides to write easy and clean code for Bukkit plugins.'
+        url 'https://github.com/KekoSeries/KekoUtil'
+
+        scm {
+            connection 'scm:git:git://github.com/KekoSeries/KekoUtil.git'
+            developerConnection 'scm:git:ssh://github.com/KekoSeries/KekoUtil.git'
+            url 'https://github.com/KekoSeries/KekoUtil'
+        }
+        licenses {
+            license {
+                name 'MIT License'
+                url 'https://opensource.org/licenses/mit-license.php'
+            }
+        }
+        developers {
+            developer {
+                id 'portlek'
+                name 'Hasan Demirtaş'
+                email 'hasan@infumia.com.tr'
+                roles {
+                    role 'Architect'
+                    role 'Developer'
+                }
+                timezone '+3'
+            }
+        }
+    }
 }
