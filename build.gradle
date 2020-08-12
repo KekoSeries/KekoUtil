@@ -61,6 +61,7 @@ dependencies {
     implementation("io.github.portlek:mapentry:1.2")
     implementation("com.github.WesJD.AnvilGUI:anvilgui:master-SNAPSHOT")
     implementation("io.github.bananapuncher714:NBTEditor:7.16")
+    implementation("com.zaxxer:HikariCP:3.4.5")
 
     // Other Stuffs
     compileOnly("io.github.portlek:configs-core:4.9.1")
