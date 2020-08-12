@@ -1,4 +1,4 @@
-package io.github.plugintemplate.bukkittemplate.hooks;
+package tr.com.infumia.kekoutil.hooks;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;

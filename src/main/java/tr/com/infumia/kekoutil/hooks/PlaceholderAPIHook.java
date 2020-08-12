@@ -1,4 +1,4 @@
-package io.github.plugintemplate.bukkittemplate.hooks;
+package tr.com.infumia.kekoutil.hooks;
 
 import me.clip.placeholderapi.PlaceholderAPIPlugin;
 import org.bukkit.Bukkit;

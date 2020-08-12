@@ -1,4 +1,4 @@
-package io.github.plugintemplate.bukkittemplate.hooks;
+package tr.com.infumia.kekoutil.hooks;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
