@@ -1,7 +1,10 @@
 package tr.com.infumia.kekoutil;
 
+import io.github.portlek.bukkititembuilder.util.ColorUtil;
 import io.github.portlek.configs.CfgSection;
 import io.github.portlek.smartinventory.manager.BasicSmartInventory;
+import java.io.IOException;
+import org.bukkit.Bukkit;
 
 public final class KekoUtilPlugin extends KekoUtil {
 
@@ -17,6 +20,21 @@ public final class KekoUtilPlugin extends KekoUtil {
     public void onEnable() {
         Hooks.loadHooks();
         KekoUtil.getInventory().init();
+        this.getServer().getScheduler().runTask(this, () ->
+            this.getServer().getScheduler().runTaskAsynchronously(this, this::checkForUpdate));
+    }
+
+    private void checkForUpdate() {
+        final UpdateChecker updater = new UpdateChecker(this, 82718);
+        try {
+            if (updater.checkForUpdates()) {
+                Bukkit.getConsoleSender().sendMessage(ColorUtil.colored(""));
+            } else {
+                Bukkit.getConsoleSender().sendMessage(ColorUtil.colored(""));
+            }
+        } catch (final IOException exception) {
+            this.getLogger().warning("Update checker failed, could not connect to the API.");
+        }
     }
 
 }
