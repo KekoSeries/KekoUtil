@@ -171,6 +171,11 @@
             <version>1.2</version>
         </dependency>
         <dependency>
+            <groupId>io.github.portlek</groupId>
+            <artifactId>equilibrium</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
             <groupId>me.carleslc.Simple-YAML</groupId>
             <artifactId>Simple-Configuration</artifactId>
             <version>1.7.1</version>
