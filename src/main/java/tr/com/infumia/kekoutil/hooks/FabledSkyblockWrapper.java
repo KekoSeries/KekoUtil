@@ -6,6 +6,7 @@ import com.songoda.skyblock.island.IslandManager;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 @RequiredArgsConstructor
@@ -25,15 +26,18 @@ public final class FabledSkyblockWrapper implements IslandWrapped {
     }
 
     @Override
-    public void removeIslandLevel(@NotNull final UUID uuid, final long level) {
+    public void removeIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
+        
     }
 
     @Override
-    public void addIslandLevel(@NotNull final UUID uuid, final long level) {
+    public void addIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
+
     }
 
     @Override
-    public void setIslandLevel(@NotNull final UUID uuid, final long level) {
+    public void setIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
+
     }
 
 }
