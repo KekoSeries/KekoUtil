@@ -83,7 +83,7 @@
         </repository>
         <repository>
             <id>pex</id>
-            <url>http://pex-repo.ao eu.xyz</url>
+            <url>http://pex-repo.aoeu.xyz</url>
         </repository>
     </repositories>
 
