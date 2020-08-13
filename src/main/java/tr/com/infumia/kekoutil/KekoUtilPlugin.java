@@ -13,6 +13,7 @@ public final class KekoUtilPlugin extends KekoUtil {
 
     @Override
     public void onEnable() {
+        Hooks.loadHooks();
         KekoUtil.getInventory().init();
     }
 

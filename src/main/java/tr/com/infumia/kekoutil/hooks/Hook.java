@@ -4,6 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 public interface Hook {
 
+    @NotNull
+    String id();
+
     boolean initiate();
 
     @NotNull

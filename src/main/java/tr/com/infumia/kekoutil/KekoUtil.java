@@ -1,7 +1,6 @@
 package tr.com.infumia.kekoutil;
 
 import io.github.portlek.smartinventory.SmartInventory;
-import io.github.portlek.smartinventory.manager.BasicSmartInventory;
 import java.util.Optional;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;

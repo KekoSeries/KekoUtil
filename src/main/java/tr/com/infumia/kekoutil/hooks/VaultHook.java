@@ -4,10 +4,20 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class VaultHook implements Hook {
 
+    public static final String VAULT_ID = "Vault";
+
+    @Nullable
     private Economy economy;
+
+    @NotNull
+    @Override
+    public String id() {
+        return VaultHook.VAULT_ID;
+    }
 
     @Override
     public boolean initiate() {
