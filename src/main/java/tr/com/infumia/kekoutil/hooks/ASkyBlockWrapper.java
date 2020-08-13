@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class ASkyBlockWrapper implements IslandWrapped {
 
-    public static Map<Plugin, Boolean> kekoUtil = new HashMap<>();
+    private static final Map<Plugin, Boolean> CACHE = new HashMap<>();
 
     @NotNull
     private final ASkyBlockAPI skyBlockAPI;
@@ -20,11 +20,11 @@ public final class ASkyBlockWrapper implements IslandWrapped {
     }
 
     public static boolean isKekoUtil(@NotNull final Plugin plugin) {
-        return ASkyBlockWrapper.kekoUtil.getOrDefault(plugin, false);
+        return ASkyBlockWrapper.CACHE.getOrDefault(plugin, false);
     }
 
     public static void setKekoUtil(@NotNull final Plugin plugin, final boolean kekoUtil) {
-        ASkyBlockWrapper.kekoUtil.put(plugin, kekoUtil);
+        ASkyBlockWrapper.CACHE.put(plugin, kekoUtil);
     }
 
     @Override

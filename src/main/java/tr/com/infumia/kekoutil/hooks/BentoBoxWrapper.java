@@ -16,7 +16,7 @@ import world.bentobox.bentobox.database.objects.Island;
 
 public final class BentoBoxWrapper implements IslandWrapped {
 
-    public static Map<Plugin, Boolean> kekoUtil = new HashMap<>();
+    private static final Map<Plugin, Boolean> CACHE = new HashMap<>();
 
     @NotNull
     private final BentoBox bentoBox;
@@ -30,11 +30,11 @@ public final class BentoBoxWrapper implements IslandWrapped {
     }
 
     public static boolean isKekoUtil(@NotNull final Plugin plugin) {
-        return ASkyBlockWrapper.kekoUtil.getOrDefault(plugin, false);
+        return BentoBoxWrapper.CACHE.getOrDefault(plugin, false);
     }
 
     public static void setKekoUtil(@NotNull final Plugin plugin, final boolean kekoUtil) {
-        ASkyBlockWrapper.kekoUtil.put(plugin, kekoUtil);
+        BentoBoxWrapper.CACHE.put(plugin, kekoUtil);
     }
 
     @Override
