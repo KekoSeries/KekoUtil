@@ -1,9 +1,7 @@
 package tr.com.infumia.kekoutil;
 
 import io.github.portlek.smartinventory.manager.BasicSmartInventory;
-import kr.entree.spigradle.annotations.PluginMain;
 
-@PluginMain
 public final class KekoUtilPlugin extends KekoUtil {
 
     @Override
