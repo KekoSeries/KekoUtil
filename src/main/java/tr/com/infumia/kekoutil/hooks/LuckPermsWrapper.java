@@ -1,28 +1,24 @@
 package tr.com.infumia.kekoutil.hooks;
 
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class LuckPermsWrapper implements Wrapped {
+@RequiredArgsConstructor
+public final class LuckPermsWrapper implements GroupWrapped {
 
     @NotNull
     private final LuckPerms luckPerms;
 
-    public LuckPermsWrapper(@NotNull final LuckPerms luckPerms) {
-        this.luckPerms = luckPerms;
-    }
-
     @NotNull
+    @Override
     public String getGroup(@NotNull final Player player) {
-        final User user = this.luckPerms.getUserManager().getUser(player.getUniqueId());
-        if (user == null) {
-            return "";
-        }
-        return user.getPrimaryGroup();
+        return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
+            .map(User::getPrimaryGroup)
+            .orElse("");
     }
-
-    // TODO Add new LuckPerms methods as you want.
 
 }

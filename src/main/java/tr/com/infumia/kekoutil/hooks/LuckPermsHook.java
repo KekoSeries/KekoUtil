@@ -4,13 +4,11 @@ import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public final class LuckPermsHook implements Hook {
 
     public static final String LUCKPERMS_ID = "LuckPerms";
 
-    @Nullable
     private LuckPerms luckPerms;
 
     @NotNull
@@ -22,7 +20,6 @@ public final class LuckPermsHook implements Hook {
     @Override
     public boolean initiate() {
         final boolean check = Bukkit.getPluginManager().getPlugin("LuckPerms") != null;
-
         if (check) {
             final RegisteredServiceProvider<LuckPerms> provider =
                 Bukkit.getServicesManager().getRegistration(LuckPerms.class);
@@ -30,7 +27,6 @@ public final class LuckPermsHook implements Hook {
                 this.luckPerms = provider.getProvider();
             }
         }
-
         return this.luckPerms != null;
     }
 
@@ -38,7 +34,7 @@ public final class LuckPermsHook implements Hook {
     @NotNull
     public Wrapped create() {
         if (this.luckPerms == null) {
-            throw new IllegalStateException("LuckPerms not initiated! Use NewLuckPermsHook#initiate method.");
+            throw new IllegalStateException("LuckPerms not initiated! Use LuckPermsHook#initiate method.");
         }
         return new LuckPermsWrapper(this.luckPerms);
     }

@@ -27,7 +27,7 @@ public final class FabledSkyblockWrapper implements IslandWrapped {
 
     @Override
     public void removeIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
-        
+
     }
 
     @Override
