@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class PlaceholderAPIHook implements Hook {
 
-    public static final String PLACEHOLDER_API_ID = "PlaceholderAPI";
+    public static final String PLACEHOLDERAPI_ID = "PlaceholderAPI";
 
     @Nullable
     private PlaceholderAPIPlugin placeholderAPI;
@@ -15,7 +15,7 @@ public final class PlaceholderAPIHook implements Hook {
     @NotNull
     @Override
     public String id() {
-        return PlaceholderAPIHook.PLACEHOLDER_API_ID;
+        return PlaceholderAPIHook.PLACEHOLDERAPI_ID;
     }
 
     @Override

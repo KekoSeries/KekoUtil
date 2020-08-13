@@ -7,3 +7,8 @@ softdepend:
   - Vault
   - PlaceholderAPI
   - LuckPerms
+  - PermissionsEx
+  - GroupManager
+  - BentoBox
+  - ASkyBlock
+  - FabledSkyblock

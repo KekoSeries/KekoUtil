@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class LuckPermsHook implements Hook {
 
-    public static final String LUCK_PERMS_ID = "LuckPerms";
+    public static final String LUCKPERMS_ID = "LuckPerms";
 
     @Nullable
     private LuckPerms luckPerms;
@@ -16,7 +16,7 @@ public final class LuckPermsHook implements Hook {
     @NotNull
     @Override
     public String id() {
-        return LuckPermsHook.LUCK_PERMS_ID;
+        return LuckPermsHook.LUCKPERMS_ID;
     }
 
     @Override
