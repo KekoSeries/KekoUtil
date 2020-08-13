@@ -25,7 +25,7 @@
 
 package tr.com.infumia.kekoutil;
 
-import io.github.portlek.configs.bukkit.util.ColorUtil;
+import io.github.portlek.bukkititembuilder.util.ColorUtil;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
