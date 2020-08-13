@@ -1,10 +1,13 @@
 package tr.com.infumia.kekoutil.hooks;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.addons.AddonClassLoader;
@@ -13,7 +16,7 @@ import world.bentobox.bentobox.database.objects.Island;
 
 public final class BentoBoxWrapper implements IslandWrapped {
 
-    private static boolean kekoUtil = false;
+    public static Map<Plugin, Boolean> kekoUtil = new HashMap<>();
 
     @NotNull
     private final BentoBox bentoBox;
@@ -26,12 +29,12 @@ public final class BentoBoxWrapper implements IslandWrapped {
         this.classLoader = classLoader;
     }
 
-    public static boolean isKekoUtil() {
-        return BentoBoxWrapper.kekoUtil;
+    public static boolean isKekoUtil(@NotNull final Plugin plugin) {
+        return ASkyBlockWrapper.kekoUtil.getOrDefault(plugin, false);
     }
 
-    public static void setKekoUtil(final boolean kekoUtil) {
-        BentoBoxWrapper.kekoUtil = kekoUtil;
+    public static void setKekoUtil(@NotNull final Plugin plugin, final boolean kekoUtil) {
+        ASkyBlockWrapper.kekoUtil.put(plugin, kekoUtil);
     }
 
     @Override
@@ -52,21 +55,21 @@ public final class BentoBoxWrapper implements IslandWrapped {
     }
 
     @Override
-    public void removeIslandLevel(@NotNull final UUID uuid, final long level) {
-        this.setIslandLevel(uuid, Math.max(0L, this.getIslandLevel(uuid) - level));
+    public void removeIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
+        this.setIslandLevel(plugin, uuid, Math.max(0L, this.getIslandLevel(uuid) - level));
     }
 
     @Override
-    public void addIslandLevel(@NotNull final UUID uuid, final long level) {
-        this.setIslandLevel(uuid, this.getIslandLevel(uuid) + level);
+    public void addIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
+        this.setIslandLevel(plugin, uuid, this.getIslandLevel(uuid) + level);
     }
 
     @Override
-    public void setIslandLevel(@NotNull final UUID uuid, final long level) {
+    public void setIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
         this.findFirstIsland(uuid).ifPresent(island -> {
             try {
-                if (!BentoBoxWrapper.kekoUtil) {
-                    BentoBoxWrapper.kekoUtil = true;
+                if (!BentoBoxWrapper.isKekoUtil(plugin)) {
+                    BentoBoxWrapper.setKekoUtil(plugin, true);
                     this.classLoader
                         .findClass("world.bentobox.level.Level", false)
                         .getMethod("calculateIslandLevel", World.class, User.class, UUID.class)
