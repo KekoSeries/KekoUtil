@@ -68,10 +68,10 @@ dependencies {
     implementation("com.github.WesJD.AnvilGUI:anvilgui:master-SNAPSHOT")
     implementation("io.github.bananapuncher714:NBTEditor:7.16")
     implementation("com.zaxxer:HikariCP:3.4.5")
-    implementation("io.github.portlek:configs-core:4.9.1")
-    implementation("io.github.portlek:configs-yaml:4.9.1")
-    implementation("io.github.portlek:configs-json:4.9.1")
-    implementation("io.github.portlek:configs-bukkit:4.9.1")
+    implementation("io.github.portlek:configs-core:4.9.2")
+    implementation("io.github.portlek:configs-yaml:4.9.2")
+    implementation("io.github.portlek:configs-json:4.9.2")
+    implementation("io.github.portlek:configs-bukkit:4.9.2")
 
     // Other Stuffs
     compileOnly("org.jetbrains:annotations:20.0.0")
