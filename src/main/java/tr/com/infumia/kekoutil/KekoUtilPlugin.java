@@ -1,5 +1,6 @@
 package tr.com.infumia.kekoutil;
 
+import io.github.portlek.configs.CfgSection;
 import io.github.portlek.smartinventory.manager.BasicSmartInventory;
 
 public final class KekoUtilPlugin extends KekoUtil {
