@@ -2,6 +2,7 @@ package tr.com.infumia.kekoutil;
 
 import io.github.portlek.bukkititembuilder.util.ColorUtil;
 import io.github.portlek.configs.CfgSection;
+import io.github.portlek.configs.bukkit.BukkitExtensions;
 import io.github.portlek.smartinventory.manager.BasicSmartInventory;
 import java.io.IOException;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ public final class KekoUtilPlugin extends KekoUtil {
         KekoUtil.setInstance(this);
         KekoUtil.setInventory(new BasicSmartInventory(this));
         TaskUtilities.init(this);
+        BukkitExtensions.registerExtensions();
         CfgSection.addProvidedClass(FileElement.class, new FileElement.Provider());
     }
 
