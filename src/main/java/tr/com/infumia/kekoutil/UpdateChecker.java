@@ -55,6 +55,12 @@ public final class UpdateChecker {
             plugin.getDescription().getVersion());
     }
 
+    public static UpdateChecker checkAndGet(@NotNull final Plugin plugin, final int projectID) throws IOException {
+        final UpdateChecker checker = new UpdateChecker(plugin, projectID);
+        checker.checkForUpdates();
+        return checker;
+    }
+
     @NotNull
     public String getResourceURL() {
         return "https://www.spigotmc.org/resources/" + this.project;
@@ -64,9 +70,8 @@ public final class UpdateChecker {
         final URLConnection con = new URL(this.checkURL).openConnection();
         this.newVersion = new BufferedReader(
             new InputStreamReader(
-                con.getInputStream()
-            )
-        ).readLine();
+                con.getInputStream()))
+            .readLine();
 
         return !this.plugin.getDescription().getVersion().equals(this.newVersion);
     }
