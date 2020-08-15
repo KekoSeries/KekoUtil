@@ -31,6 +31,8 @@ public final class KekoUtilPlugin extends KekoUtil {
         try {
             if (updater.checkForUpdates()) {
                 Bukkit.getConsoleSender().sendMessage(ColorUtil.colored("&6[&eKekoUtil&6] &eNew version found (v" + updater.getNewVersion() + ')'));
+                Bukkit.getConsoleSender().sendMessage(ColorUtil.colored("&6[&eKekoUtil&6] &eYou can download the latest version here:"));
+                Bukkit.getConsoleSender().sendMessage(updater.getResourceURL());
             } else {
                 Bukkit.getConsoleSender().sendMessage(ColorUtil.colored("&6[&eKekoUtil&6] &aYou're using the latest version (v" + updater.getNewVersion() + ')'));
             }
