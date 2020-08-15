@@ -42,11 +42,11 @@ public final class KekoUtilPlugin extends KekoUtil {
         final UpdateChecker updater = new UpdateChecker(this, 82718);
         try {
             if (updater.checkForUpdates()) {
-                Bukkit.getConsoleSender().sendMessage(ColorUtil.colored("&6[&eKekoUtil&6] &eNew version found (v" + updater.getNewVersion() + ')'));
-                Bukkit.getConsoleSender().sendMessage(ColorUtil.colored("&6[&eKekoUtil&6] &eYou can download the latest version here:"));
-                Bukkit.getConsoleSender().sendMessage(updater.getResourceURL());
+                sender.sendMessage(ColorUtil.colored("&6[&eKekoUtil&6] &eNew version found (v" + updater.getNewVersion() + ')'));
+                sender.sendMessage(ColorUtil.colored("&6[&eKekoUtil&6] &eYou can download the latest version here:"));
+                sender.sendMessage(updater.getResourceURL());
             } else {
-                Bukkit.getConsoleSender().sendMessage(ColorUtil.colored("&6[&eKekoUtil&6] &aYou're using the latest version (v" + updater.getNewVersion() + ')'));
+                sender.sendMessage(ColorUtil.colored("&6[&eKekoUtil&6] &aYou're using the latest version (v" + updater.getNewVersion() + ')'));
             }
         } catch (final IOException exception) {
             this.getLogger().warning("Update checker failed, could not connect to the API.");
