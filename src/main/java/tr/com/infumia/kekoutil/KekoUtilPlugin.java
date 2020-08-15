@@ -6,6 +6,9 @@ import io.github.portlek.configs.bukkit.BukkitExtensions;
 import io.github.portlek.smartinventory.manager.BasicSmartInventory;
 import java.io.IOException;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
 
 public final class KekoUtilPlugin extends KekoUtil {
 
@@ -23,10 +26,19 @@ public final class KekoUtilPlugin extends KekoUtil {
         Hooks.loadHooks();
         KekoUtil.getInventory().init();
         this.getServer().getScheduler().runTask(this, () ->
-            this.getServer().getScheduler().runTaskAsynchronously(this, this::checkForUpdate));
+            this.getServer().getScheduler().runTaskAsynchronously(this, (@NotNull Runnable) this::checkForUpdate));
+        ListenerUtilities.register(
+            PlayerJoinEvent.class,
+            event -> event.getPlayer().hasPermission("kekoutil.version"),
+            event -> this.checkForUpdate(event.getPlayer()),
+            this);
     }
 
     private void checkForUpdate() {
+        this.checkForUpdate(Bukkit.getConsoleSender());
+    }
+
+    private void checkForUpdate(@NotNull final CommandSender sender) {
         final UpdateChecker updater = new UpdateChecker(this, 82718);
         try {
             if (updater.checkForUpdates()) {
