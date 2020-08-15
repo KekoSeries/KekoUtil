@@ -25,6 +25,7 @@
 
 package tr.com.infumia.kekoutil;
 
+import io.github.portlek.bukkititembuilder.ItemStackBuilder;
 import io.github.portlek.configs.CfgSection;
 import io.github.portlek.configs.Provided;
 import io.github.portlek.configs.bukkit.BkktSection;
@@ -58,6 +59,10 @@ public final class FileElement {
 
     public FileElement(@NotNull final ItemStack itemStack, final int row, final int column) {
         this(itemStack, SlotPos.of(row, column));
+    }
+
+    public FileElement(@NotNull final ItemStackBuilder builder, final int row, final int column) {
+        this(builder.itemStack(), row, column);
     }
 
     public FileElement(@NotNull final FileElement fileElement) {
