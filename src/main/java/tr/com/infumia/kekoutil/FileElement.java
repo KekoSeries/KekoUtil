@@ -57,6 +57,14 @@ public final class FileElement {
     @NotNull
     private final SlotPos position;
 
+    @NotNull
+    private final Consumer<ClickEvent> clickEvent;
+
+    public FileElement(@NotNull final ItemStack itemStack, @NotNull final SlotPos position) {
+        this(itemStack, position, event -> {
+        });
+    }
+
     public FileElement(@NotNull final ItemStack itemStack, final int row, final int column) {
         this(itemStack, SlotPos.of(row, column));
     }
@@ -77,22 +85,17 @@ public final class FileElement {
         return this.position.getColumn();
     }
 
-    public void insert(@NotNull final InventoryContents contents, @NotNull final Consumer<ClickEvent> consumer) {
-        contents.set(this.row(), this.column(), this.clickableItem(consumer));
+    public void insert(@NotNull final InventoryContents contents) {
+        contents.set(this.row(), this.column(), this.clickableItem());
     }
 
     @NotNull
-    public Icon clickableItem(@NotNull final Consumer<ClickEvent> consumer) {
-        return Icon.from(this.itemStack).whenClick(consumer);
+    public Icon clickableItem() {
+        return Icon.from(this.itemStack).whenClick(this.clickEvent);
     }
 
     public void fill(@NotNull final InventoryContents contents) {
-        this.fill(contents, event -> {
-        });
-    }
-
-    public void fill(@NotNull final InventoryContents contents, @NotNull final Consumer<ClickEvent> consumer) {
-        contents.fill(this.clickableItem(consumer));
+        contents.fill(this.clickableItem());
     }
 
     @NotNull
@@ -108,6 +111,10 @@ public final class FileElement {
     @NotNull
     public FileElement changeItemStack(@NotNull final ItemStack itemStack) {
         return new FileElement(itemStack, this.position);
+    }
+
+    public FileElement changeClickEvent(@NotNull final Consumer<ClickEvent> consumer) {
+        return new FileElement(this.itemStack, this.position, consumer);
     }
 
     @NotNull
