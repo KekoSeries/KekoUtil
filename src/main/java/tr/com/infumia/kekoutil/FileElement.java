@@ -48,7 +48,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 @RequiredArgsConstructor
-@Getter
 public final class FileElement {
 
     @NotNull
