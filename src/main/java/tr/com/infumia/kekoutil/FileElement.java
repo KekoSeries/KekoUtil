@@ -266,13 +266,33 @@ public final class FileElement {
     }
 
     @NotNull
+    public FileElement changeName(final boolean colored, @NotNull final String name) {
+        return FileElement.from(ItemStackBuilder.from(this.itemStack).name(name, colored), this.position, this.clickEvent);
+    }
+
+    @NotNull
     public FileElement changeName(@NotNull final String name) {
-        return FileElement.from(ItemStackBuilder.from(this.itemStack).name(name), this.position, this.clickEvent);
+        return this.changeName(true, name);
+    }
+
+    @NotNull
+    public FileElement changeLore(final boolean colored, @NotNull final List<String> lore) {
+        return FileElement.from(ItemStackBuilder.from(this.itemStack).lore(lore, colored), this.position, this.clickEvent);
+    }
+
+    @NotNull
+    public FileElement changeLore(final boolean colored, @NotNull final String... lore) {
+        return this.changeLore(colored, Arrays.asList(lore));
     }
 
     @NotNull
     public FileElement changeLore(@NotNull final List<String> lore) {
-        return FileElement.from(ItemStackBuilder.from(this.itemStack).lore(lore), this.position, this.clickEvent);
+        return this.changeLore(true, lore);
+    }
+
+    @NotNull
+    public FileElement changeLore(@NotNull final String... lore) {
+        return this.changeLore(true, lore);
     }
 
     @NotNull
