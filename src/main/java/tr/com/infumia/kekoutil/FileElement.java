@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -297,7 +296,9 @@ public final class FileElement {
 
         @NotNull
         @Override
-        public Optional<FileElement> get(@NotNull final CfgSection section, @NotNull final String path) {
+        public Optional<FileElement> getWithField(@NotNull final FileElement fileElement,
+                                                  @NotNull final CfgSection section, @NotNull final String path) {
+
             final String dot = GeneralUtilities.putDot(path);
             final Optional<ItemStack> itemStackOptional = ((BkktSection) section).getItemStack(dot + "item");
             final Optional<Integer> rowOptional = section.getInteger(dot + "row");
@@ -306,7 +307,14 @@ public final class FileElement {
                 return Optional.empty();
             }
             return Optional.of(
-                FileElement.from(itemStackOptional.get(), SlotPos.of(rowOptional.get(), columnOptional.get())));
+                FileElement.from(itemStackOptional.get(), SlotPos.of(rowOptional.get(),
+                    columnOptional.get()), fileElement.clickEvent()));
+        }
+
+        @NotNull
+        @Override
+        public Optional<FileElement> get(@NotNull final CfgSection section, @NotNull final String path) {
+            return Optional.empty();
         }
 
     }
