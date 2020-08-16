@@ -284,7 +284,7 @@ public final class FileElement {
         return this.changeItemStack(clone);
     }
 
-    public static class Provider implements Provided<FileElement> {
+    public static final class Provider implements Provided<FileElement> {
 
         @Override
         public void set(@NotNull final FileElement fileElement, @NotNull final CfgSection section, @NotNull final String path) {
