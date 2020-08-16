@@ -25,6 +25,7 @@
 
 package tr.com.infumia.kekoutil;
 
+import com.cryptomorin.xseries.XMaterial;
 import io.github.portlek.bukkititembuilder.ItemStackBuilder;
 import io.github.portlek.configs.CfgSection;
 import io.github.portlek.configs.Provided;
@@ -60,21 +61,122 @@ public final class FileElement {
     @NotNull
     private final Consumer<ClickEvent> clickEvent;
 
-    public FileElement(@NotNull final ItemStack itemStack, @NotNull final SlotPos position) {
-        this(itemStack, position, event -> {
+    // With item.
+
+    @NotNull
+    public static FileElement from(@NotNull final ItemStack itemStack, @NotNull final SlotPos position,
+                                   @NotNull final Consumer<ClickEvent> clickEvent) {
+        return new FileElement(itemStack, position, clickEvent);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final ItemStack itemStack, final int row, final int column,
+                                   @NotNull final Consumer<ClickEvent> clickEvent) {
+        return new FileElement(itemStack, SlotPos.of(row, column), clickEvent);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final ItemStack itemStack, @NotNull final SlotPos position) {
+        return FileElement.from(itemStack, position, event -> {
         });
     }
 
-    public FileElement(@NotNull final ItemStack itemStack, final int row, final int column) {
-        this(itemStack, SlotPos.of(row, column));
+    @NotNull
+    public static FileElement from(@NotNull final ItemStack itemStack, final int row, final int column) {
+        return FileElement.from(itemStack, row, column, event -> {
+        });
     }
 
-    public FileElement(@NotNull final ItemStackBuilder builder, final int row, final int column) {
-        this(builder.itemStack(), row, column);
+    @NotNull
+    public static FileElement from(@NotNull final ItemStack itemStack) {
+        return FileElement.from(itemStack, SlotPos.of(0, 0));
     }
 
-    public FileElement(@NotNull final FileElement fileElement) {
-        this(fileElement.itemStack, fileElement.position);
+    // With builder.
+
+    @NotNull
+    public static FileElement from(@NotNull final ItemStackBuilder builder, @NotNull final SlotPos position,
+                                   @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(builder.itemStack(), position, clickEvent);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final ItemStackBuilder builder, final int row, final int column,
+                                   @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(builder.itemStack(), row, column, clickEvent);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final ItemStackBuilder builder, @NotNull final SlotPos position) {
+        return FileElement.from(builder.itemStack(), position);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final ItemStackBuilder builder, final int row, final int column) {
+        return FileElement.from(builder.itemStack(), row, column);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final ItemStackBuilder builder) {
+        return FileElement.from(builder.itemStack());
+    }
+
+    // With material.
+
+    @NotNull
+    public static FileElement from(@NotNull final Material material, @NotNull final SlotPos position,
+                                   @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(ItemStackBuilder.from(material), position, clickEvent);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final Material material, final int row, final int column,
+                                   @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(ItemStackBuilder.from(material), row, column, clickEvent);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final Material material, @NotNull final SlotPos position) {
+        return FileElement.from(ItemStackBuilder.from(material), position);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final Material material, final int row, final int column) {
+        return FileElement.from(ItemStackBuilder.from(material), row, column);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final Material material) {
+        return FileElement.from(ItemStackBuilder.from(material));
+    }
+
+    // With Xmaterial.
+
+    @NotNull
+    public static FileElement from(@NotNull final XMaterial material, @NotNull final SlotPos position,
+                                   @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(ItemStackBuilder.from(material), position, clickEvent);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final XMaterial material, final int row, final int column,
+                                   @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(ItemStackBuilder.from(material), row, column, clickEvent);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final XMaterial material, @NotNull final SlotPos position) {
+        return FileElement.from(ItemStackBuilder.from(material), position);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final XMaterial material, final int row, final int column) {
+        return FileElement.from(ItemStackBuilder.from(material), row, column);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final XMaterial material) {
+        return FileElement.from(ItemStackBuilder.from(material));
     }
 
     public int row() {
@@ -100,28 +202,28 @@ public final class FileElement {
 
     @NotNull
     public FileElement changeColumn(final int column) {
-        return new FileElement(this.itemStack, this.row(), column);
+        return FileElement.from(this.itemStack, this.row(), column, this.clickEvent);
     }
 
     @NotNull
     public FileElement changeRow(final int row) {
-        return new FileElement(this.itemStack, row, this.column());
+        return FileElement.from(this.itemStack, row, this.column(), this.clickEvent);
     }
 
     @NotNull
     public FileElement changeItemStack(@NotNull final ItemStack itemStack) {
-        return new FileElement(itemStack, this.position);
+        return FileElement.from(itemStack, this.position, this.clickEvent);
     }
 
     public FileElement changeClickEvent(@NotNull final Consumer<ClickEvent> consumer) {
-        return new FileElement(this.itemStack, this.position, consumer);
+        return FileElement.from(this.itemStack, this.position, consumer);
     }
 
     @NotNull
     public FileElement changeMaterial(@NotNull final Material material) {
         final ItemStack clone = this.itemStack.clone();
         clone.setType(material);
-        return new FileElement(clone, this.position);
+        return this.changeItemStack(clone);
     }
 
     @NotNull
@@ -178,7 +280,7 @@ public final class FileElement {
                 return Optional.empty();
             }
             return Optional.of(
-                new FileElement(itemStackOptional.get(), SlotPos.of(rowOptional.get(), columnOptional.get())));
+                FileElement.from(itemStackOptional.get(), SlotPos.of(rowOptional.get(), columnOptional.get())));
         }
 
     }
