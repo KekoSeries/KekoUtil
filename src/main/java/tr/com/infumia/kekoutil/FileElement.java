@@ -178,12 +178,27 @@ public final class FileElement {
         return FileElement.from(ItemStackBuilder.from(material));
     }
 
+    @NotNull
+    public ItemStack itemStack() {
+        return this.itemStack;
+    }
+
+    @NotNull
+    public SlotPos position() {
+        return this.position;
+    }
+
     public int row() {
-        return this.position.getRow();
+        return this.position().getRow();
     }
 
     public int column() {
-        return this.position.getColumn();
+        return this.position().getColumn();
+    }
+
+    @NotNull
+    public Consumer<ClickEvent> clickEvent() {
+        return this.clickEvent;
     }
 
     public void insert(@NotNull final InventoryContents contents) {
