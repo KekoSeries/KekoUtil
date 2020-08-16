@@ -45,7 +45,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 @RequiredArgsConstructor
@@ -227,35 +226,48 @@ public final class FileElement {
     }
 
     @NotNull
+    public FileElement changeMaterial(@NotNull final XMaterial xmaterial) {
+        final ItemStack clone = this.itemStack.clone();
+        Optional.ofNullable(xmaterial.parseMaterial()).ifPresent(clone::setType);
+        return this.changeItemStack(clone);
+    }
+
+    @NotNull
+    public FileElement changeName(@NotNull final String name) {
+        return FileElement.from(ItemStackBuilder.from(this.itemStack).name(name), this.position, this.clickEvent);
+    }
+
+    @NotNull
+    public FileElement changeLore(@NotNull final List<String> lore) {
+        return FileElement.from(ItemStackBuilder.from(this.itemStack).lore(lore), this.position, this.clickEvent);
+    }
+
+    @NotNull
     public FileElement replace(final boolean name, final boolean lore, @NotNull final Placeholder... placeholders) {
         return this.replace(name, lore, Arrays.asList(placeholders));
     }
 
     @NotNull
-    public FileElement replace(final boolean displayName, final boolean lore,
+    public FileElement replace(final boolean name, final boolean lore,
                                @NotNull final Iterable<Placeholder> placeholders) {
         final ItemStack clone = this.itemStack.clone();
-        final ItemMeta itemMeta = clone.getItemMeta();
-        if (itemMeta == null) {
-            return this;
-        }
-        if (displayName && itemMeta.hasDisplayName()) {
-            for (final Placeholder placeholder : placeholders) {
-                itemMeta.setDisplayName(placeholder.replace(itemMeta.getDisplayName()));
-            }
-        }
-        if (lore && itemMeta.getLore() != null && itemMeta.hasLore()) {
-            final List<String> finalLore = new ArrayList<>();
-            itemMeta.getLore().forEach(s -> {
-                final AtomicReference<String> finalString = new AtomicReference<>(s);
+        Optional.ofNullable(clone.getItemMeta()).ifPresent(itemMeta -> {
+            if (name && itemMeta.hasDisplayName()) {
                 placeholders.forEach(placeholder ->
-                    finalString.set(placeholder.replace(finalString.get()))
-                );
-                finalLore.add(finalString.get());
-            });
-            itemMeta.setLore(finalLore);
-        }
-        clone.setItemMeta(itemMeta);
+                    itemMeta.setDisplayName(placeholder.replace(itemMeta.getDisplayName())));
+            }
+            if (lore && itemMeta.getLore() != null && itemMeta.hasLore()) {
+                final List<String> finallore = new ArrayList<>();
+                itemMeta.getLore().forEach(s -> {
+                    final AtomicReference<String> finalstring = new AtomicReference<>(s);
+                    placeholders.forEach(placeholder ->
+                        finalstring.set(placeholder.replace(finalstring.get())));
+                    finallore.add(finalstring.get());
+                });
+                itemMeta.setLore(finallore);
+            }
+            clone.setItemMeta(itemMeta);
+        });
         return this.changeItemStack(clone);
     }
 
