@@ -292,7 +292,7 @@ public final class FileElement {
             final String dot = GeneralUtilities.putDot(path);
             section.set(dot + "row", fileElement.row());
             section.set(dot + "column", fileElement.column());
-            ((BkktSection) section).setItemStack(dot + "item", fileElement.getItemStack());
+            ((BkktSection) section).setItemStack(dot + "item", fileElement.itemStack());
         }
 
         @NotNull
