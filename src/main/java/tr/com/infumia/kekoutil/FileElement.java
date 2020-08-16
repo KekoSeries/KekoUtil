@@ -69,7 +69,7 @@ public final class FileElement {
     @NotNull
     public static FileElement from(@NotNull final ItemStack itemStack, final int row, final int column,
                                    @NotNull final Consumer<ClickEvent> clickEvent) {
-        return new FileElement(itemStack, SlotPos.of(row, column), clickEvent);
+        return FileElement.from(itemStack, SlotPos.of(row, column), clickEvent);
     }
 
     @NotNull
@@ -82,6 +82,11 @@ public final class FileElement {
     public static FileElement from(@NotNull final ItemStack itemStack, final int row, final int column) {
         return FileElement.from(itemStack, row, column, event -> {
         });
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final ItemStack itemStack, @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(itemStack, SlotPos.of(0, 0), clickEvent);
     }
 
     @NotNull
@@ -114,6 +119,11 @@ public final class FileElement {
     }
 
     @NotNull
+    public static FileElement from(@NotNull final ItemStackBuilder builder, @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(builder.itemStack(), clickEvent);
+    }
+
+    @NotNull
     public static FileElement from(@NotNull final ItemStackBuilder builder) {
         return FileElement.from(builder.itemStack());
     }
@@ -143,6 +153,11 @@ public final class FileElement {
     }
 
     @NotNull
+    public static FileElement from(@NotNull final Material material, @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(ItemStackBuilder.from(material), clickEvent);
+    }
+
+    @NotNull
     public static FileElement from(@NotNull final Material material) {
         return FileElement.from(ItemStackBuilder.from(material));
     }
@@ -169,6 +184,11 @@ public final class FileElement {
     @NotNull
     public static FileElement from(@NotNull final XMaterial material, final int row, final int column) {
         return FileElement.from(ItemStackBuilder.from(material), row, column);
+    }
+
+    @NotNull
+    public static FileElement from(@NotNull final XMaterial material, @NotNull final Consumer<ClickEvent> clickEvent) {
+        return FileElement.from(ItemStackBuilder.from(material), clickEvent);
     }
 
     @NotNull
