@@ -298,7 +298,13 @@ public final class FileElement {
         @Override
         public Optional<FileElement> getWithField(@NotNull final FileElement fileElement,
                                                   @NotNull final CfgSection section, @NotNull final String path) {
+            return this.get(section, path)
+                .map(element -> element.changeClickEvent(fileElement.clickEvent()));
+        }
 
+        @NotNull
+        @Override
+        public Optional<FileElement> get(@NotNull final CfgSection section, @NotNull final String path) {
             final String dot = GeneralUtilities.putDot(path);
             final Optional<ItemStack> itemStackOptional = ((BkktSection) section).getItemStack(dot + "item");
             final Optional<Integer> rowOptional = section.getInteger(dot + "row");
@@ -308,13 +314,7 @@ public final class FileElement {
             }
             return Optional.of(
                 FileElement.from(itemStackOptional.get(), SlotPos.of(rowOptional.get(),
-                    columnOptional.get()), fileElement.clickEvent()));
-        }
-
-        @NotNull
-        @Override
-        public Optional<FileElement> get(@NotNull final CfgSection section, @NotNull final String path) {
-            return Optional.empty();
+                    columnOptional.get())));
         }
 
     }
