@@ -296,8 +296,18 @@ public final class FileElement {
     }
 
     @NotNull
+    public FileElement replace(@NotNull final Placeholder... placeholders) {
+        return this.replace(true, true placeholders);
+    }
+
+    @NotNull
     public FileElement replace(final boolean name, final boolean lore, @NotNull final Placeholder... placeholders) {
         return this.replace(name, lore, Arrays.asList(placeholders));
+    }
+
+    @NotNull
+    public FileElement replace(@NotNull final Iterable<Placeholder> placeholders) {
+        return this.replace(true, true, placeholders);
     }
 
     @NotNull
