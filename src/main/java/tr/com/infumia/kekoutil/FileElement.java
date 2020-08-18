@@ -297,7 +297,7 @@ public final class FileElement {
 
     @NotNull
     public FileElement replace(@NotNull final Placeholder... placeholders) {
-        return this.replace(true, true placeholders);
+        return this.replace(true, true, placeholders);
     }
 
     @NotNull
