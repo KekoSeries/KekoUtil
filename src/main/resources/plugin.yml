@@ -1,6 +1,6 @@
 name: KekoUtil
 main: tr.com.infumia.kekoutil.KekoUtilPlugin
-version: '4.5'
+version: '4.6'
 author: infumia
 api-version: '1.13'
 softdepend:
