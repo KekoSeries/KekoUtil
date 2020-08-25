@@ -232,6 +232,10 @@ public final class FileElement {
         contents.fill(this.clickableItem());
     }
 
+    public void fillBorders(@NotNull final InventoryContents contents) {
+        contents.fillBorders(this.clickableItem());
+    }
+
     @NotNull
     public FileElement changeColumn(final int column) {
         return FileElement.from(this.itemStack, this.row(), column, this.clickEvent);
