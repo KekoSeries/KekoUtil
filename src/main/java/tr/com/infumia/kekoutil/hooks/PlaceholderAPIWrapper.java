@@ -3,6 +3,7 @@ package tr.com.infumia.kekoutil.hooks;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.Wrapped;
 
 public final class PlaceholderAPIWrapper implements Wrapped {
 

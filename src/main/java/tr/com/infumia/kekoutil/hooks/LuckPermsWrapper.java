@@ -6,6 +6,7 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.GroupWrapped;
 
 @RequiredArgsConstructor
 public final class LuckPermsWrapper implements GroupWrapped {

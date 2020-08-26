@@ -4,6 +4,8 @@ import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.Hook;
+import tr.com.infumia.kekoutil.Wrapped;
 
 public final class LuckPermsHook implements Hook {
 

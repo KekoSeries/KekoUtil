@@ -23,7 +23,7 @@
  *
  */
 
-package tr.com.infumia.kekoutil;
+package tr.com.infumia.kekoutil.util;
 
 import java.util.List;
 import java.util.Optional;
@@ -194,7 +194,7 @@ public class TaskUtilities {
         }.runTaskTimerAsynchronously(TaskUtilities.getPlugin(), delay, period);
     }
 
-    void init(@NotNull final Plugin plugin) {
+    public void init(@NotNull final Plugin plugin) {
         TaskUtilities.plugin = plugin;
     }
 

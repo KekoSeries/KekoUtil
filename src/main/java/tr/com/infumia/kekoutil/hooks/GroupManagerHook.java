@@ -3,6 +3,8 @@ package tr.com.infumia.kekoutil.hooks;
 import org.anjocaido.groupmanager.GroupManager;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.Hook;
+import tr.com.infumia.kekoutil.Wrapped;
 
 public final class GroupManagerHook implements Hook {
 

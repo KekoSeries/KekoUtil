@@ -4,6 +4,7 @@ import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.GroupWrapped;
 
 public final class GroupManagerWrapper implements GroupWrapped {
 

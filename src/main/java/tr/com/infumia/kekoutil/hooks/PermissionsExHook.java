@@ -3,6 +3,7 @@ package tr.com.infumia.kekoutil.hooks;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
+import tr.com.infumia.kekoutil.Hook;
 
 public final class PermissionsExHook implements Hook {
 

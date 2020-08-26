@@ -23,7 +23,7 @@
  *
  */
 
-package tr.com.infumia.kekoutil;
+package tr.com.infumia.kekoutil.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

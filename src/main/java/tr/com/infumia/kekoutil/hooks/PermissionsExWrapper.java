@@ -3,6 +3,7 @@ package tr.com.infumia.kekoutil.hooks;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
+import tr.com.infumia.kekoutil.GroupWrapped;
 
 public final class PermissionsExWrapper implements GroupWrapped {
 

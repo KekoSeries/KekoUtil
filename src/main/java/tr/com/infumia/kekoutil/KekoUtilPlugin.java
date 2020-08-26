@@ -9,6 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.hooks.Hooks;
+import tr.com.infumia.kekoutil.provider.FileElementProvider;
+import tr.com.infumia.kekoutil.util.ListenerUtilities;
+import tr.com.infumia.kekoutil.util.TaskUtilities;
+import tr.com.infumia.kekoutil.util.UpdateChecker;
 
 public final class KekoUtilPlugin extends KekoUtil {
 
@@ -18,7 +23,7 @@ public final class KekoUtilPlugin extends KekoUtil {
         KekoUtil.setInventory(new BasicSmartInventory(this));
         TaskUtilities.init(this);
         BukkitExtensions.registerExtensions();
-        CfgSection.addProvidedClass(FileElement.class, new FileElement.Provider());
+        CfgSection.addProvidedClass(FileElement.class, new FileElementProvider());
     }
 
     @Override

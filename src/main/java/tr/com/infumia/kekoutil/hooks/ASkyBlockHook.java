@@ -3,6 +3,7 @@ package tr.com.infumia.kekoutil.hooks;
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.Hook;
 
 public final class ASkyBlockHook implements Hook {
 

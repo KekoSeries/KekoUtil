@@ -23,7 +23,7 @@
  *
  */
 
-package tr.com.infumia.kekoutil;
+package tr.com.infumia.kekoutil.hooks;
 
 import io.github.portlek.bukkititembuilder.util.ColorUtil;
 import java.util.HashMap;
@@ -33,7 +33,8 @@ import java.util.stream.Stream;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-import tr.com.infumia.kekoutil.hooks.*;
+import tr.com.infumia.kekoutil.Hook;
+import tr.com.infumia.kekoutil.Wrapped;
 
 @UtilityClass
 public class Hooks {
@@ -80,7 +81,7 @@ public class Hooks {
         return Hooks.getWrapper(PermissionsExHook.PERMISSONSEX_ID);
     }
 
-    void loadHooks() {
+    public void loadHooks() {
         Stream.of(new LuckPermsHook(), new PlaceholderAPIHook(), new VaultHook(), new ASkyBlockHook(),
             new BentoBoxHook(), new FabledSkyblockHook(), new GroupManagerHook(), new PermissionsExHook())
             .filter(Hook::initiate)

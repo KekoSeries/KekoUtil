@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.IslandWrapped;
 
 @RequiredArgsConstructor
 public final class FabledSkyblockWrapper implements IslandWrapped {

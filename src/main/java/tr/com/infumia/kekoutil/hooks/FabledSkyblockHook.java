@@ -3,6 +3,7 @@ package tr.com.infumia.kekoutil.hooks;
 import com.songoda.skyblock.SkyBlock;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.Hook;
 
 public final class FabledSkyblockHook implements Hook {
 

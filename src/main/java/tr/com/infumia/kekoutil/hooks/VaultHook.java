@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tr.com.infumia.kekoutil.Hook;
+import tr.com.infumia.kekoutil.Wrapped;
 
 public final class VaultHook implements Hook {
 

@@ -3,6 +3,7 @@ package tr.com.infumia.kekoutil.hooks;
 import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.Hook;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.addons.AddonClassLoader;

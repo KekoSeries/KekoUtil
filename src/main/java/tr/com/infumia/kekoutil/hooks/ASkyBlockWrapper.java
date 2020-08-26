@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import tr.com.infumia.kekoutil.IslandWrapped;
 
 public final class ASkyBlockWrapper implements IslandWrapped {
 
