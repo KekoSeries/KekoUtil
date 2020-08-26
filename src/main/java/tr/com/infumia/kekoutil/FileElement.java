@@ -40,7 +40,7 @@ import tr.com.infumia.kekoutil.element.FileElementBasic;
 import tr.com.infumia.kekoutil.util.PlaceType;
 import tr.com.infumia.kekoutil.util.Placeholder;
 
-public interface FileElement {
+public interface FileElement extends Cloneable {
 
     @NotNull
     static FileElement from(@NotNull final ItemStack itemStack, @NotNull final PlaceType placeType,
@@ -778,7 +778,7 @@ public interface FileElement {
     }
 
     @NotNull
-    default FileElement clone() {
+    default FileElement duplicate() {
         return FileElement.from(this.itemStack(), this.type(), this.objects(), this.events());
     }
 
