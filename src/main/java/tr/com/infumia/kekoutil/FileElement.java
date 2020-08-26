@@ -72,6 +72,30 @@ public interface FileElement {
 
     @SafeVarargs
     @NotNull
+    static FileElement none(@NotNull final ItemStack itemStack, @NotNull final Consumer<ClickEvent>... events) {
+        return FileElement.from(itemStack, PlaceType.NONE, events);
+    }
+
+    @SafeVarargs
+    @NotNull
+    static FileElement none(@NotNull final ItemStackBuilder builder, @NotNull final Consumer<ClickEvent>... events) {
+        return FileElement.none(builder.itemStack(), events);
+    }
+
+    @SafeVarargs
+    @NotNull
+    static FileElement none(@NotNull final Material material, @NotNull final Consumer<ClickEvent>... events) {
+        return FileElement.none(ItemStackBuilder.from(material), events);
+    }
+
+    @SafeVarargs
+    @NotNull
+    static FileElement none(@NotNull final XMaterial material, @NotNull final Consumer<ClickEvent>... events) {
+        return FileElement.none(ItemStackBuilder.from(material), events);
+    }
+
+    @SafeVarargs
+    @NotNull
     static FileElement slots(@NotNull final ItemStack itemStack, @NotNull final List<Integer> slots,
                              @NotNull final Consumer<ClickEvent>... events) {
         return FileElement.from(itemStack, PlaceType.SLOTS, PlaceType.SLOTS.parse(slots), events);
@@ -606,6 +630,10 @@ public interface FileElement {
 
     default void place(@NotNull final InventoryContents contents) {
         this.type().place(this.clickableItem(), contents, this.objects().values().toArray());
+    }
+
+    default void set(@NotNull final InventoryContents contents, final int row, final int column) {
+        contents.set(row, column, this.clickableItem());
     }
 
     @NotNull
