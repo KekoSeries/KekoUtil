@@ -636,6 +636,10 @@ public interface FileElement {
         contents.set(row, column, this.clickableItem());
     }
 
+    default void add(@NotNull final InventoryContents contents) {
+        contents.add(this.clickableItem());
+    }
+
     @NotNull
     default Optional<Object> object(@NotNull final String key) {
         return Optional.ofNullable(this.objects().get(key));
