@@ -49,6 +49,9 @@ public final class FileElementBasic implements FileElement {
     private Map<String, Object> objects;
 
     @NotNull
+    private Map<String, Object> values;
+
+    @NotNull
     private List<Consumer<ClickEvent>> events;
 
     @Override
@@ -91,6 +94,26 @@ public final class FileElementBasic implements FileElement {
 
     @Override
     @NotNull
+    public Map<String, Object> values() {
+        return Collections.unmodifiableMap(this.values);
+    }
+
+    @Override
+    @NotNull
+    public FileElement addValue(@NotNull final String key, @NotNull final Object object) {
+        this.values.put(key, object);
+        return this;
+    }
+
+    @Override
+    @NotNull
+    public FileElement removeValue(@NotNull final String key) {
+        this.values.remove(key);
+        return this;
+    }
+
+    @Override
+    @NotNull
     public FileElement changeItemStack(@NotNull final ItemStack itemStack) {
         this.itemStack = itemStack;
         return this;
@@ -107,6 +130,13 @@ public final class FileElementBasic implements FileElement {
     @NotNull
     public FileElement changeObjects(@NotNull final Map<String, Object> objects) {
         this.objects = objects;
+        return this;
+    }
+
+    @Override
+    @NotNull
+    public FileElement changeValues(@NotNull final Map<String, Object> values) {
+        this.values = values;
         return this;
     }
 

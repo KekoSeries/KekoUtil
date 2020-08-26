@@ -44,17 +44,33 @@ public interface FileElement extends Cloneable {
 
     @NotNull
     static FileElement from(@NotNull final ItemStack itemStack, @NotNull final PlaceType placeType,
-                            @NotNull final Map<String, Object> objects,
+                            @NotNull final Map<String, Object> objects, @NotNull final Map<String, Object> values,
                             @NotNull final List<Consumer<ClickEvent>> events) {
-        return new FileElementBasic(itemStack, placeType, new HashMap<>(objects), events);
+        return new FileElementBasic(itemStack, placeType, new HashMap<>(objects), new HashMap<>(values), events);
     }
 
     @SafeVarargs
     @NotNull
     static FileElement from(@NotNull final ItemStack itemStack, @NotNull final PlaceType placeType,
-                            @NotNull final Map<String, Object> objects,
+                            @NotNull final Map<String, Object> objects, @NotNull final Map<String, Object> values,
                             @NotNull final Consumer<ClickEvent>... events) {
-        return FileElement.from(itemStack, placeType, objects, Arrays.asList(events));
+        return FileElement.from(itemStack, placeType, new HashMap<>(objects), new HashMap<>(values),
+            Arrays.asList(events));
+    }
+
+    @NotNull
+    static FileElement from(@NotNull final ItemStack itemStack, @NotNull final PlaceType placeType,
+                            @NotNull final Map<String, Object> values,
+                            @NotNull final List<Consumer<ClickEvent>> events) {
+        return FileElement.from(itemStack, placeType, new HashMap<>(), new HashMap<>(values), events);
+    }
+
+    @SafeVarargs
+    @NotNull
+    static FileElement from(@NotNull final ItemStack itemStack, @NotNull final PlaceType placeType,
+                            @NotNull final Map<String, Object> values,
+                            @NotNull final Consumer<ClickEvent>... events) {
+        return FileElement.from(itemStack, placeType, values, Arrays.asList(events));
     }
 
     @NotNull
@@ -667,6 +683,11 @@ public interface FileElement extends Cloneable {
     }
 
     @NotNull
+    default Optional<Object> value(@NotNull final String key) {
+        return Optional.ofNullable(this.values().get(key));
+    }
+
+    @NotNull
     default Icon clickableItem() {
         final Icon icon = Icon.from(this.itemStack());
         this.events().forEach(icon::whenClick);
@@ -801,6 +822,15 @@ public interface FileElement extends Cloneable {
     FileElement removeObject(@NotNull String key);
 
     @NotNull
+    Map<String, Object> values();
+
+    @NotNull
+    FileElement addValue(@NotNull String key, @NotNull Object object);
+
+    @NotNull
+    FileElement removeValue(@NotNull String key);
+
+    @NotNull
     FileElement changeItemStack(@NotNull ItemStack itemStack);
 
     @NotNull
@@ -808,6 +838,9 @@ public interface FileElement extends Cloneable {
 
     @NotNull
     FileElement changeObjects(@NotNull Map<String, Object> objects);
+
+    @NotNull
+    FileElement changeValues(@NotNull Map<String, Object> values);
 
     @NotNull
     FileElement changeEvent(@NotNull List<Consumer<ClickEvent>> event);

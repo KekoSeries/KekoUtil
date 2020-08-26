@@ -30,10 +30,7 @@ import io.github.portlek.configs.Provided;
 import io.github.portlek.configs.bukkit.BkktSection;
 import io.github.portlek.configs.util.GeneralUtilities;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import tr.com.infumia.kekoutil.FileElement;
@@ -47,8 +44,11 @@ public final class FileElementProvider implements Provided<FileElement> {
         final String dot = GeneralUtilities.putDot(path);
         ((BkktSection) section).setItemStack(dot + "item", fileElement.itemStack());
         section.set(dot + "type", fileElement.type().name());
+        section.remove(dot + "values");
+        section.set(dot + "values", new ArrayList<>(fileElement.values().values()));
         section.remove(dot + "objects");
-        section.set(dot + "objects", new ArrayList<>(fileElement.objects().values()));
+        final CfgSection objects = section.createSection(dot + "objects");
+        fileElement.values().forEach(objects::set);
     }
 
     @NotNull
@@ -76,15 +76,20 @@ public final class FileElementProvider implements Provided<FileElement> {
             KekoUtil.getInstance().getLogger().severe(typeString + " is not a valid value for PlaceType!");
             return Optional.empty();
         }
-        final Map<String, Object> parse = type.parse(section.getListOrEmpty(dot + "objects").toArray());
+        final Map<String, Object> objects = new HashMap<>();
+        section.getSection("objects").ifPresent(objectSection ->
+            objectSection.getKeys(false).forEach(s ->
+                objectSection.get(s).ifPresent(o ->
+                    objects.put(s, o))));
+        final Map<String, Object> parse = type.parse(section.getListOrEmpty(dot + "values").toArray());
         if (type.control(parse.values().toArray())) {
-            return Optional.of(FileElement.from(itemStackOptional.get(), type, parse));
+            return Optional.of(FileElement.from(itemStackOptional.get(), type, objects, parse));
         }
         final List<Object> defaults = type.defaultValues();
         if (defaults.isEmpty()) {
-            section.remove(dot + "objects");
+            section.remove(dot + "values");
         } else {
-            section.set(dot + "objects", defaults);
+            section.set(dot + "values", defaults);
         }
         return Optional.empty();
     }
