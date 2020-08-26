@@ -54,6 +54,8 @@ public enum PlaceType {
         int.class, int.class),
     FILL((icon, contents, objects) ->
         contents.fill(icon)),
+    FILL_EMPTIES((icon, contents, objects) ->
+        contents.fillEmpties(icon)),
     FILL_ROW((icon, contents, objects) ->
         contents.fillRow((int) objects[0], icon),
         Collections.singletonList("row"),

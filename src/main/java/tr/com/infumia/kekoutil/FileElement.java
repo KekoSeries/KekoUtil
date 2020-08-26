@@ -46,7 +46,7 @@ public interface FileElement {
     static FileElement from(@NotNull final ItemStack itemStack, @NotNull final PlaceType placeType,
                             @NotNull final Map<String, Object> objects,
                             @NotNull final List<Consumer<ClickEvent>> events) {
-        return new FileElementBasic(itemStack, placeType, objects, events);
+        return new FileElementBasic(itemStack, placeType, new HashMap<>(objects), events);
     }
 
     @SafeVarargs
@@ -201,6 +201,31 @@ public interface FileElement {
     @NotNull
     static FileElement fill(@NotNull final XMaterial material, @NotNull final Consumer<ClickEvent>... events) {
         return FileElement.fill(ItemStackBuilder.from(material), events);
+    }
+
+    @SafeVarargs
+    @NotNull
+    static FileElement fillEmpties(@NotNull final ItemStack itemStack, @NotNull final Consumer<ClickEvent>... events) {
+        return FileElement.from(itemStack, PlaceType.FILL_EMPTIES, events);
+    }
+
+    @SafeVarargs
+    @NotNull
+    static FileElement fillEmpties(@NotNull final ItemStackBuilder builder,
+                                   @NotNull final Consumer<ClickEvent>... events) {
+        return FileElement.fillEmpties(builder.itemStack(), events);
+    }
+
+    @SafeVarargs
+    @NotNull
+    static FileElement fillEmpties(@NotNull final Material material, @NotNull final Consumer<ClickEvent>... events) {
+        return FileElement.fillEmpties(ItemStackBuilder.from(material), events);
+    }
+
+    @SafeVarargs
+    @NotNull
+    static FileElement fillEmpties(@NotNull final XMaterial material, @NotNull final Consumer<ClickEvent>... events) {
+        return FileElement.fillEmpties(ItemStackBuilder.from(material), events);
     }
 
     @SafeVarargs
@@ -636,10 +661,6 @@ public interface FileElement {
         contents.set(row, column, this.clickableItem());
     }
 
-    default void add(@NotNull final InventoryContents contents) {
-        contents.add(this.clickableItem());
-    }
-
     @NotNull
     default Optional<Object> object(@NotNull final String key) {
         return Optional.ofNullable(this.objects().get(key));
@@ -757,6 +778,11 @@ public interface FileElement {
     }
 
     @NotNull
+    default FileElement clone() {
+        return FileElement.from(this.itemStack(), this.type(), this.objects(), this.events());
+    }
+
+    @NotNull
     ItemStack itemStack();
 
     @NotNull
@@ -769,6 +795,12 @@ public interface FileElement {
     Map<String, Object> objects();
 
     @NotNull
+    FileElement addObject(@NotNull String key, @NotNull Object object);
+
+    @NotNull
+    FileElement removeObject(@NotNull String key);
+
+    @NotNull
     FileElement changeItemStack(@NotNull ItemStack itemStack);
 
     @NotNull
@@ -777,6 +809,7 @@ public interface FileElement {
     @NotNull
     FileElement changeObjects(@NotNull Map<String, Object> objects);
 
+    @NotNull
     FileElement changeEvent(@NotNull List<Consumer<ClickEvent>> event);
 
 }

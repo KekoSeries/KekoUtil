@@ -77,6 +77,20 @@ public final class FileElementBasic implements FileElement {
 
     @Override
     @NotNull
+    public FileElement addObject(@NotNull final String key, @NotNull final Object object) {
+        this.objects.put(key, object);
+        return this;
+    }
+
+    @Override
+    @NotNull
+    public FileElement removeObject(@NotNull final String key) {
+        this.objects.remove(key);
+        return this;
+    }
+
+    @Override
+    @NotNull
     public FileElement changeItemStack(@NotNull final ItemStack itemStack) {
         this.itemStack = itemStack;
         return this;
