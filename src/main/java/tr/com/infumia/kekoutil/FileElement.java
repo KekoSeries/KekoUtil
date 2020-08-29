@@ -23,7 +23,7 @@
  *
  */
 
-package tr.com.infumia.kekoutil.element;
+package tr.com.infumia.kekoutil;
 
 import com.cryptomorin.xseries.XMaterial;
 import io.github.portlek.bukkititembuilder.ItemStackBuilder;

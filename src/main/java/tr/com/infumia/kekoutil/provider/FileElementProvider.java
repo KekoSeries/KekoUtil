@@ -34,7 +34,7 @@ import java.util.*;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import tr.com.infumia.kekoutil.KekoUtil;
-import tr.com.infumia.kekoutil.element.FileElement;
+import tr.com.infumia.kekoutil.FileElement;
 import tr.com.infumia.kekoutil.util.PlaceType;
 
 public final class FileElementProvider implements Provided<FileElement> {
