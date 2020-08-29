@@ -856,7 +856,7 @@ public final class FileElement {
 
     @NotNull
     private FileElement duplicate() {
-        return FileElement.from(this.itemStack(), this.type(), this.events());
+        return FileElement.from(this.itemStack(), this.type(), this.values(), this.events());
     }
 
 }
