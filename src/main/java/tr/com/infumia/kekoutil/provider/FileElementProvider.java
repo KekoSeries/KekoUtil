@@ -30,8 +30,10 @@ import io.github.portlek.configs.Provided;
 import io.github.portlek.configs.bukkit.BkktSection;
 import io.github.portlek.configs.util.GeneralUtilities;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import tr.com.infumia.kekoutil.FileElement;
@@ -68,7 +70,14 @@ public final class FileElementProvider implements Provided<FileElement> {
             return Optional.empty();
         }
         final PlaceType type = PlaceType.fromString(typeOptional.get());
-        final Map<String, Object> parse = type.parse(section.getListOrEmpty(dot + "values").toArray());
+        final Optional<CfgSection> optional = section.getSection("values");
+        final Map<String, Object> parse = new HashMap<>();
+        optional.ifPresent(values ->
+            parse.putAll(type.parse(values.getKeys(false).stream()
+                .map(values::get)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList()))));
         if (type.control(new ArrayList<>(parse.values()))) {
             return Optional.of(FileElement.from(itemStackOptional.get(), type, parse));
         }
