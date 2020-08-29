@@ -33,8 +33,8 @@ import java.io.File;
 import java.util.*;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import tr.com.infumia.kekoutil.KekoUtil;
 import tr.com.infumia.kekoutil.FileElement;
+import tr.com.infumia.kekoutil.KekoUtil;
 import tr.com.infumia.kekoutil.util.PlaceType;
 
 public final class FileElementProvider implements Provided<FileElement> {
@@ -46,10 +46,16 @@ public final class FileElementProvider implements Provided<FileElement> {
         ((BkktSection) section).setItemStack(dot + "item", fileElement.itemStack());
         section.set(dot + "type", fileElement.type().name());
         section.remove(dot + "values");
-        section.set(dot + "values", new ArrayList<>(fileElement.values().values()));
+        final List<Object> values = new ArrayList<>(fileElement.values().values());
+        if (!values.isEmpty()) {
+            section.set(dot + "values", values);
+        }
         section.remove(dot + "objects");
-        final CfgSection objects = section.createSection(dot + "objects");
-        fileElement.values().forEach(objects::set);
+        final Map<String, Object> objects = fileElement.objects();
+        if (!objects.isEmpty()) {
+            final CfgSection objsection = section.createSection(dot + "objects");
+            objects.forEach(objsection::set);
+        }
     }
 
     @NotNull
