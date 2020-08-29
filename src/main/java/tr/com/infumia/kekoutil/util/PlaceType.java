@@ -145,12 +145,8 @@ public enum PlaceType {
 
     public boolean control(@NotNull final List<Object> objects) {
         if (this == PlaceType.SLOTS) {
-            if (objects.isEmpty()) {
-                return true;
-            } else {
-                return objects.stream()
-                    .allMatch(o -> o.getClass().equals(Integer.class));
-            }
+            return objects.isEmpty() || objects.stream()
+                .allMatch(o -> o.getClass().equals(Integer.class));
         }
         if (objects.size() != this.types.size()) {
             return false;
