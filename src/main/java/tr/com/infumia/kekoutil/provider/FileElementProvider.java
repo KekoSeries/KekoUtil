@@ -50,12 +50,6 @@ public final class FileElementProvider implements Provided<FileElement> {
         if (!values.isEmpty()) {
             section.set(dot + "values", values);
         }
-        section.remove(dot + "objects");
-        final Map<String, Object> objects = fileElement.objects();
-        if (!objects.isEmpty()) {
-            final CfgSection objsection = section.createSection(dot + "objects");
-            objects.forEach(objsection::set);
-        }
     }
 
     @NotNull
@@ -76,14 +70,9 @@ public final class FileElementProvider implements Provided<FileElement> {
             return Optional.empty();
         }
         final PlaceType type = PlaceType.fromString(typeOptional.get());
-        final Map<String, Object> objects = new HashMap<>();
-        section.getSection("objects").ifPresent(objectSection ->
-            objectSection.getKeys(false).forEach(s ->
-                objectSection.get(s).ifPresent(o ->
-                    objects.put(s, o))));
         final Map<String, Object> parse = type.parse(section.getListOrEmpty(dot + "values").toArray());
-        if (type.control(parse.values().toArray())) {
-            return Optional.of(FileElement.from(itemStackOptional.get(), type, objects, parse));
+        if (type.control(new ArrayList<>(parse.values()))) {
+            return Optional.of(FileElement.from(itemStackOptional.get(), type, parse));
         }
         final List<Object> defaults = type.defaultValues();
         if (defaults.isEmpty()) {
