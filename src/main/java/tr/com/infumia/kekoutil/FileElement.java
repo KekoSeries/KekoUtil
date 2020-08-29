@@ -842,13 +842,13 @@ public final class FileElement {
     @NotNull
     public FileElement addObject(@NotNull final String key, @NotNull final Object object) {
         this.objects.put(key, object);
-        return this;
+        return duplicate();
     }
 
     @NotNull
     public FileElement removeObject(@NotNull final String key) {
         this.objects.remove(key);
-        return this;
+        return duplicate();
     }
 
     @NotNull
@@ -859,43 +859,43 @@ public final class FileElement {
     @NotNull
     public FileElement addValue(@NotNull final String key, @NotNull final Object object) {
         this.values.put(key, object);
-        return this;
+        return duplicate();
     }
 
     @NotNull
     public FileElement removeValue(@NotNull final String key) {
         this.values.remove(key);
-        return this;
+        return duplicate();
     }
 
     @NotNull
     public FileElement changeItemStack(@NotNull final ItemStack itemStack) {
         this.itemStack = itemStack;
-        return this;
+        return duplicate();
     }
 
     @NotNull
     public FileElement changeType(@NotNull final PlaceType type) {
         this.placeType = type;
-        return this;
+        return duplicate();
     }
 
     @NotNull
     public FileElement changeObjects(@NotNull final Map<String, Object> objects) {
         this.objects = objects;
-        return this;
+        return duplicate();
     }
 
     @NotNull
     public FileElement changeValues(@NotNull final Map<String, Object> values) {
         this.values = values;
-        return this;
+        return duplicate();
     }
 
     @NotNull
     public FileElement changeEvent(@NotNull final List<Consumer<ClickEvent>> events) {
         this.events = events;
-        return this;
+        return duplicate();
     }
 
 }
