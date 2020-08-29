@@ -30,7 +30,6 @@ import io.github.portlek.configs.Provided;
 import io.github.portlek.configs.bukkit.BkktSection;
 import io.github.portlek.configs.util.GeneralUtilities;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.bukkit.inventory.ItemStack;
@@ -73,11 +72,12 @@ public final class FileElementProvider implements Provided<FileElement> {
         if (type.control(new ArrayList<>(parse.values()))) {
             return Optional.of(FileElement.from(itemStackOptional.get(), type, parse));
         }
-        final List<Object> defaults = type.defaultValues();
+        final Map<String, Object> defaults = type.defaultValues();
         if (defaults.isEmpty()) {
             section.remove(dot + "values");
         } else {
-            section.set(dot + "values", defaults);
+            defaults.forEach((s, o) ->
+                section.set(dot + "values." + s, o));
         }
         return Optional.empty();
     }
