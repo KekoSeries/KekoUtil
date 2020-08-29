@@ -75,14 +75,7 @@ public final class FileElementProvider implements Provided<FileElement> {
         if (!itemStackOptional.isPresent() || !typeOptional.isPresent()) {
             return Optional.empty();
         }
-        final String typeString = typeOptional.get();
-        final PlaceType type = PlaceType.fromString(typeString);
-        if (type == PlaceType.NONE) {
-            final File file = section.getParent().getFile();
-            KekoUtil.getInstance().getLogger().severe(file.getName() + " file contains wrong PlaceType!");
-            KekoUtil.getInstance().getLogger().severe(typeString + " is not a valid value for PlaceType!");
-            return Optional.empty();
-        }
+        final PlaceType type = PlaceType.fromString(typeOptional.get());
         final Map<String, Object> objects = new HashMap<>();
         section.getSection("objects").ifPresent(objectSection ->
             objectSection.getKeys(false).forEach(s ->
