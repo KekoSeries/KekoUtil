@@ -77,7 +77,8 @@ public final class FileElementProvider implements Provided<FileElement> {
                 .map(values::get)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .collect(Collectors.toList()))));
+                .collect(Collectors.toList())
+                .toArray())));
         if (type.control(new ArrayList<>(parse.values()))) {
             return Optional.of(FileElement.from(itemStackOptional.get(), type, parse));
         }

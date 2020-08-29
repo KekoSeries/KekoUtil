@@ -166,10 +166,10 @@ public enum PlaceType {
     }
 
     @NotNull
-    public Map<String, Object> parse(@NotNull final List<Object> objects) {
+    public Map<String, Object> parse(@NotNull final Object... objects) {
         return IntStream.range(0, this.types.size())
             .boxed()
-            .map(index -> MapEntry.from(this.keys.get(index), objects.get(index)))
+            .map(index -> MapEntry.from(this.keys.get(index), objects[index]))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
