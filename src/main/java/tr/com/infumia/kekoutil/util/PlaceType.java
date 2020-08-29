@@ -44,6 +44,7 @@ public enum PlaceType {
             .map(o -> (int) o)
             .forEach(slot ->
                 contents.set(slot, icon)),
+        Collections.singletonList("slots"),
         int[].class),
     INSERT_INDEX((icon, contents, objects) ->
         contents.set((int) objects.get("index"), icon),
@@ -166,10 +167,6 @@ public enum PlaceType {
 
     @NotNull
     public Map<String, Object> parse(@NotNull final Object... objects) {
-        if (this == PlaceType.SLOTS) {
-            return ((List<Integer>) objects[0]).stream()
-                .collect(Collectors.toMap(slot -> "slot-" + slot, slot -> slot));
-        }
         final Map<String, Object> map = new HashMap<>();
         for (int index = 0; index < objects.length; index++) {
             final String key = this.keys.get(index);
