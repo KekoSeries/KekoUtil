@@ -800,7 +800,7 @@ public final class FileElement {
 
     @NotNull
     public ItemStack itemStack() {
-        return this.itemStack;
+        return this.itemStack.clone();
     }
 
     @NotNull
