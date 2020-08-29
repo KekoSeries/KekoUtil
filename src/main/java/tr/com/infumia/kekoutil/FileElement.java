@@ -702,14 +702,14 @@ public final class FileElement {
 
     @NotNull
     public FileElement changeMaterial(@NotNull final Material material) {
-        final ItemStack clone = this.itemStack().clone();
+        final ItemStack clone = this.itemStack();
         clone.setType(material);
         return this.changeItemStack(clone);
     }
 
     @NotNull
     public FileElement changeMaterial(@NotNull final XMaterial xmaterial) {
-        final ItemStack clone = this.itemStack().clone();
+        final ItemStack clone = this.itemStack();
         Optional.ofNullable(xmaterial.parseMaterial()).ifPresent(clone::setType);
         return this.changeItemStack(clone);
     }
@@ -777,7 +777,7 @@ public final class FileElement {
     @NotNull
     public FileElement replace(final boolean name, final boolean lore,
                                @NotNull final Iterable<Placeholder> placeholders) {
-        final ItemStack clone = this.itemStack().clone();
+        final ItemStack clone = this.itemStack();
         Optional.ofNullable(clone.getItemMeta()).ifPresent(itemMeta -> {
             if (name && itemMeta.hasDisplayName()) {
                 placeholders.forEach(placeholder ->
