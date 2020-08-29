@@ -815,11 +815,6 @@ public final class FileElement {
     }
 
     @NotNull
-    public FileElement duplicate() {
-        return FileElement.from(this.itemStack(), this.type(), this.objects(), this.events());
-    }
-
-    @NotNull
     public ItemStack itemStack() {
         return this.itemStack;
     }
@@ -842,13 +837,13 @@ public final class FileElement {
     @NotNull
     public FileElement addObject(@NotNull final String key, @NotNull final Object object) {
         this.objects.put(key, object);
-        return duplicate();
+        return this.duplicate();
     }
 
     @NotNull
     public FileElement removeObject(@NotNull final String key) {
         this.objects.remove(key);
-        return duplicate();
+        return this.duplicate();
     }
 
     @NotNull
@@ -859,43 +854,48 @@ public final class FileElement {
     @NotNull
     public FileElement addValue(@NotNull final String key, @NotNull final Object object) {
         this.values.put(key, object);
-        return duplicate();
+        return this.duplicate();
     }
 
     @NotNull
     public FileElement removeValue(@NotNull final String key) {
         this.values.remove(key);
-        return duplicate();
+        return this.duplicate();
     }
 
     @NotNull
     public FileElement changeItemStack(@NotNull final ItemStack itemStack) {
         this.itemStack = itemStack;
-        return duplicate();
+        return this.duplicate();
     }
 
     @NotNull
     public FileElement changeType(@NotNull final PlaceType type) {
         this.placeType = type;
-        return duplicate();
+        return this.duplicate();
     }
 
     @NotNull
     public FileElement changeObjects(@NotNull final Map<String, Object> objects) {
         this.objects = objects;
-        return duplicate();
+        return this.duplicate();
     }
 
     @NotNull
     public FileElement changeValues(@NotNull final Map<String, Object> values) {
         this.values = values;
-        return duplicate();
+        return this.duplicate();
     }
 
     @NotNull
     public FileElement changeEvent(@NotNull final List<Consumer<ClickEvent>> events) {
         this.events = events;
-        return duplicate();
+        return this.duplicate();
+    }
+
+    @NotNull
+    private FileElement duplicate() {
+        return FileElement.from(this.itemStack(), this.type(), this.objects(), this.events());
     }
 
 }
