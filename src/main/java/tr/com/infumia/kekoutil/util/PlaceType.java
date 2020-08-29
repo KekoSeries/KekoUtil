@@ -25,6 +25,7 @@
 
 package tr.com.infumia.kekoutil.util;
 
+import io.github.portlek.mapentry.MapEntry;
 import io.github.portlek.smartinventory.Icon;
 import io.github.portlek.smartinventory.InventoryContents;
 import io.github.portlek.smartinventory.util.Pattern;
@@ -179,14 +180,34 @@ public enum PlaceType {
     }
 
     @NotNull
-    public List<Object> defaultValues() {
+    public Map<String, Object> defaultValues() {
         if (this == PlaceType.SLOTS) {
-            return Collections.singletonList("Slot numbers(0, 1, 2, 3, ...");
+            return Collections.singletonMap("slots", Arrays.asList(1, 2, 3, 4, 5));
         }
-        if (this.types.isEmpty()) {
-            return Collections.emptyList();
+        return IntStream.range(0, this.types.size())
+            .boxed()
+            .map(index -> MapEntry.from(this.keys.get(index), this.def(this.types.get(index))))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    @NotNull
+    private Object def(@NotNull final Class<?> type) {
+        if (type.equals(Integer.class)) {
+            return 1;
         }
-        return new ArrayList<>(this.keys);
+        if (type.equals(String.class)) {
+            return "test";
+        }
+        if (type.equals(String[].class)) {
+            return new String[]{"element-1", "element-2"};
+        }
+        if (type.equals(int[].class)) {
+            return new int[]{0, 1, 2};
+        }
+        if (type.equals(boolean.class)) {
+            return true;
+        }
+        return "empty";
     }
 
 }

@@ -47,10 +47,8 @@ public final class FileElementProvider implements Provided<FileElement> {
         ((BkktSection) section).setItemStack(dot + "item", fileElement.itemStack());
         section.set(dot + "type", fileElement.type().name());
         section.remove(dot + "values");
-        final List<Object> values = new ArrayList<>(fileElement.values().values());
-        if (!values.isEmpty()) {
-            section.set(dot + "values", values);
-        }
+        fileElement.values().forEach((s, o) ->
+            section.set(dot + "values." + s, o));
     }
 
     @NotNull
