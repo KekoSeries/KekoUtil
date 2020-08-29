@@ -44,16 +44,16 @@ import tr.com.infumia.kekoutil.util.Placeholder;
 public final class FileElement {
 
     @NotNull
-    private ItemStack itemStack;
+    private final ItemStack itemStack;
 
     @NotNull
-    private PlaceType placeType;
+    private final PlaceType placeType;
 
     @NotNull
-    private Map<String, Object> values;
+    private final Map<String, Object> values;
 
     @NotNull
-    private List<Consumer<ClickEvent>> events;
+    private final List<Consumer<ClickEvent>> events;
 
     @NotNull
     public static FileElement from(@NotNull final ItemStack itemStack, @NotNull final PlaceType placeType,
@@ -820,43 +820,56 @@ public final class FileElement {
 
     @NotNull
     public FileElement addValue(@NotNull final String key, @NotNull final Object object) {
-        this.values.put(key, object);
-        return this.duplicate();
+        final Map<String, Object> copy = new HashMap<>(this.values);
+        copy.put(key, object);
+        return this.duplicate(copy);
     }
 
     @NotNull
     public FileElement removeValue(@NotNull final String key) {
-        this.values.remove(key);
-        return this.duplicate();
+        final Map<String, Object> copy = new HashMap<>(this.values);
+        copy.remove(key);
+        return this.duplicate(copy);
     }
 
     @NotNull
     public FileElement changeItemStack(@NotNull final ItemStack itemStack) {
-        this.itemStack = itemStack;
-        return this.duplicate();
+        return this.duplicate(itemStack);
     }
 
     @NotNull
     public FileElement changeType(@NotNull final PlaceType type) {
-        this.placeType = type;
-        return this.duplicate();
+        return this.duplicate(type);
     }
 
     @NotNull
     public FileElement changeValues(@NotNull final Map<String, Object> values) {
-        this.values = values;
-        return this.duplicate();
+        return this.duplicate(values);
     }
 
     @NotNull
     public FileElement changeEvent(@NotNull final List<Consumer<ClickEvent>> events) {
-        this.events = events;
-        return this.duplicate();
+        return this.duplicate(events);
     }
 
     @NotNull
-    private FileElement duplicate() {
-        return FileElement.from(this.itemStack(), this.type(), this.values(), this.events());
+    private FileElement duplicate(@NotNull final ItemStack itemStack) {
+        return FileElement.from(itemStack, this.type(), this.values(), this.events());
+    }
+
+    @NotNull
+    private FileElement duplicate(@NotNull final PlaceType type) {
+        return FileElement.from(this.itemStack(), type, this.values(), this.events());
+    }
+
+    @NotNull
+    private FileElement duplicate(@NotNull final Map<String, Object> values) {
+        return FileElement.from(this.itemStack(), this.type(), values, this.events());
+    }
+
+    @NotNull
+    private FileElement duplicate(@NotNull final List<Consumer<ClickEvent>> events) {
+        return FileElement.from(this.itemStack(), this.type(), this.values(), events);
     }
 
 }
