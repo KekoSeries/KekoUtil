@@ -686,7 +686,7 @@ public final class FileElement {
     }
 
     public void place(@NotNull final InventoryContents contents) {
-        this.type().place(this.clickableItem(), contents, this.objects().values().toArray());
+        this.type().place(this.clickableItem(), contents, this.values().values().toArray());
     }
 
     public void set(@NotNull final InventoryContents contents, final int row, final int column) {
