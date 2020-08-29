@@ -181,9 +181,6 @@ public enum PlaceType {
 
     @NotNull
     public Map<String, Object> defaultValues() {
-        if (this == PlaceType.SLOTS) {
-            return Collections.singletonMap("slots", Arrays.asList(1, 2, 3, 4, 5));
-        }
         return IntStream.range(0, this.types.size())
             .boxed()
             .map(index -> MapEntry.from(this.keys.get(index), this.def(this.types.get(index))))
