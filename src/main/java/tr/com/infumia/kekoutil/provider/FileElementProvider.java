@@ -73,12 +73,13 @@ public final class FileElementProvider implements Provided<FileElement> {
         final Optional<CfgSection> optional = section.getSection("values");
         final Map<String, Object> parse = new HashMap<>();
         optional.ifPresent(values ->
-            parse.putAll(type.parse(values.getKeys(false).stream()
-                .map(values::get)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList())
-                .toArray())));
+            parse.putAll(type.parse(
+                values.getKeys(false).stream()
+                    .map(values::get)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toList())
+                    .toArray())));
         if (type.control(new ArrayList<>(parse.values()))) {
             return Optional.of(FileElement.from(itemStackOptional.get(), type, parse));
         }

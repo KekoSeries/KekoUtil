@@ -41,9 +41,10 @@ public enum PlaceType {
 
     SLOTS((icon, contents, objects) ->
         objects.values().stream()
-            .map(o -> (int) o)
-            .forEach(slot ->
-                contents.set(slot, icon)),
+            .map(o -> (int[]) o)
+            .forEach(slots ->
+                Arrays.stream(slots).forEach(slot ->
+                    contents.set(slot, icon))),
         Collections.singletonList("slots"),
         int[].class),
     INSERT_INDEX((icon, contents, objects) ->
