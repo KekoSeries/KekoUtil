@@ -41,9 +41,9 @@ public enum PlaceType {
 
     SLOTS((icon, contents, objects) ->
         objects.values().stream()
-            .map(o -> (int[]) o)
+            .map(o -> (List<Integer>) o)
             .forEach(slots ->
-                Arrays.stream(slots).forEach(slot ->
+                slots.forEach(slot ->
                     contents.set(slot, icon))),
         Collections.singletonList("slots"),
         int[].class),
