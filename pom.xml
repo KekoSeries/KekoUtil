@@ -62,7 +62,6 @@
                         <configuration>
                             <minimizeJar>false</minimizeJar>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>C:\Users\hasan\Desktop\server\plugins\${project.name}</outputFile>
                         </configuration>
                     </execution>
                 </executions>
