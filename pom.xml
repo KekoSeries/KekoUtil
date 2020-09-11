@@ -35,7 +35,7 @@
     </parent>
     <groupId>tr.com.infumia</groupId>
     <artifactId>KekoUtil</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>7.0</version>
     <name>KekoUtil</name>
     <description>A library that provides to write easy and clean code for Bukkit plugins.</description>
     <url>https://github.com/KekoSeries/KekoUtil</url>
