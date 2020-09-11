@@ -70,7 +70,7 @@ public final class FileElementProvider implements Provided<FileElement> {
             return Optional.empty();
         }
         final PlaceType type = PlaceType.fromString(typeOptional.get());
-        final Optional<CfgSection> optional = section.getSection("values");
+        final Optional<CfgSection> optional = section.getSection(dot + "values");
         final Map<String, Object> parse = new HashMap<>();
         optional.ifPresent(values ->
             parse.putAll(type.parse(

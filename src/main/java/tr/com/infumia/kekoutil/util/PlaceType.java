@@ -26,6 +26,8 @@
 package tr.com.infumia.kekoutil.util;
 
 import io.github.portlek.mapentry.MapEntry;
+import io.github.portlek.reflection.RefFieldExecuted;
+import io.github.portlek.reflection.clazz.ClassOf;
 import io.github.portlek.smartinventory.Icon;
 import io.github.portlek.smartinventory.InventoryContents;
 import io.github.portlek.smartinventory.util.Pattern;
@@ -33,6 +35,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.ClassUtils;
 import org.jetbrains.annotations.NotNull;
 import tr.com.infumia.kekoutil.TriConsumer;
 
@@ -157,8 +160,21 @@ public enum PlaceType {
         if (objects.isEmpty()) {
             return true;
         }
-        return IntStream.range(0, objects.size() - 1)
-            .allMatch(value -> objects.get(value).getClass().equals(this.types.get(value)));
+        final boolean b = IntStream.range(0, objects.size())
+            .allMatch(value -> {
+                final Object o = objects.get(value);
+                final Class<?> aClass = o.getClass();
+                final Class<?> typ = this.types.get(value);
+                return new ClassOf<>(aClass)
+                    .field("TYPE")
+                    .map(refField -> refField.of(o))
+                    .map(RefFieldExecuted::get)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(o1 -> o1.equals(typ))
+                    .orElse(aClass.equals(typ));
+            });
+        return b;
     }
 
     public void place(@NotNull final Icon icon, @NotNull final InventoryContents contents,

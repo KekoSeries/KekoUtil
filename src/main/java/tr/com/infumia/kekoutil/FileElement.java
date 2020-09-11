@@ -33,14 +33,14 @@ import io.github.portlek.smartinventory.event.abs.ClickEvent;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import tr.com.infumia.kekoutil.util.PlaceType;
 import tr.com.infumia.kekoutil.util.Placeholder;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public final class FileElement {
 
     @NotNull
