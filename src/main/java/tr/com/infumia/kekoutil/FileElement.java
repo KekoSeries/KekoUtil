@@ -140,7 +140,7 @@ public final class FileElement {
     @NotNull
     public static FileElement insertIndex(@NotNull final ItemStack itemStack, final int index,
                                           @NotNull final Consumer<ClickEvent>... events) {
-        return FileElement.from(itemStack, PlaceType.INSERT, PlaceType.INSERT.parse(index), events);
+        return FileElement.from(itemStack, PlaceType.INSERT_INDEX, PlaceType.INSERT_INDEX.parse(index), events);
     }
 
     @SafeVarargs
