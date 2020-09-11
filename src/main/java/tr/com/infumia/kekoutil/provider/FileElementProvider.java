@@ -70,18 +70,12 @@ public final class FileElementProvider implements Provided<FileElement> {
             return Optional.empty();
         }
         final PlaceType type = PlaceType.fromString(typeOptional.get());
-        final Optional<CfgSection> optional = section.getSection(dot + "values");
-        final Map<String, Object> parse = new HashMap<>();
-        optional.ifPresent(values ->
-            parse.putAll(type.parse(
-                values.getKeys(false).stream()
-                    .map(values::get)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .collect(Collectors.toList())
-                    .toArray())));
-        if (type.control(new ArrayList<>(parse.values()))) {
-            return Optional.of(FileElement.from(itemStackOptional.get(), type, parse));
+        final Map<String, Object> values = section.getSection(dot + "values")
+            .map(CfgSection::getConfigurationSection)
+            .map(configurationSection -> configurationSection.getMapValues(false))
+            .orElse(new HashMap<>());
+        if (type.control(values)) {
+            return Optional.of(FileElement.from(itemStackOptional.get(), type, values));
         }
         final Map<String, Object> defaults = type.defaultValues();
         if (defaults.isEmpty()) {

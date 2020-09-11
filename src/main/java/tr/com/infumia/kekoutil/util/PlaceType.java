@@ -33,9 +33,7 @@ import io.github.portlek.smartinventory.InventoryContents;
 import io.github.portlek.smartinventory.util.Pattern;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.ClassUtils;
 import org.jetbrains.annotations.NotNull;
 import tr.com.infumia.kekoutil.TriConsumer;
 
@@ -48,97 +46,67 @@ public enum PlaceType {
             .forEach(slots ->
                 slots.forEach(slot ->
                     contents.set(slot, icon))),
-        Collections.singletonList("slots"),
-        int[].class),
+        "slots", int[].class),
     INSERT_INDEX((icon, contents, objects) ->
         contents.set((int) objects.get("index"), icon),
-        Collections.singletonList("index"),
-        int.class),
+        "index", int.class),
     INSERT((icon, contents, objects) ->
         contents.set((int) objects.get("row"), (int) objects.get("column"), icon),
-        Arrays.asList("row", "column"),
-        int.class, int.class),
+        "row", int.class, "column", int.class),
     FILL((icon, contents, objects) ->
         contents.fill(icon)),
     FILL_EMPTIES((icon, contents, objects) ->
         contents.fillEmpties(icon)),
     FILL_ROW((icon, contents, objects) ->
         contents.fillRow((int) objects.get("row"), icon),
-        Collections.singletonList("row"),
-        int.class),
+        "row", int.class),
     FILL_COLUMN((icon, contents, objects) ->
         contents.fillColumn((int) objects.get("column"), icon),
-        Collections.singletonList("column"),
-        int.class),
+        "column", int.class),
     FILL_BORDERS((icon, contents, objects) ->
         contents.fillBorders(icon)),
     FILL_RECT_INDEX((icon, contents, objects) ->
         contents.fillRect((int) objects.get("from-index"), (int) objects.get("to-index"), icon),
-        Arrays.asList("from-index", "to-index"),
-        int.class, int.class),
+        "from-index", int.class, "to-index", int.class),
     FILL_RECT_FROM_TO((icon, contents, objects) ->
         contents.fillRect((int) objects.get("from-row"), (int) objects.get("from-column"), (int) objects.get("to-row"), (int) objects.get("to-column"), icon),
-        Arrays.asList("from-row", "from-column", "to-row", "to-column"),
-        int.class, int.class, int.class, int.class),
+        "from-row", int.class, "from-column", int.class, "to-row", int.class, "to-column", int.class),
     FILL_SQUARE_INDEX((icon, contents, objects) ->
         contents.fillSquare((int) objects.get("from-index"), (int) objects.get("to-index"), icon),
-        Arrays.asList("from-index", "to-index"),
-        int.class, int.class),
+        "from-index", int.class, "to-index", int.class),
     FILL_SQUARE_FROM_TO((icon, contents, objects) ->
         contents.fillSquare((int) objects.get("from-row"), (int) objects.get("from-column"), (int) objects.get("to-row"), (int) objects.get("to-column"), icon),
-        Arrays.asList("from-row", "from-column", "to-row", "to-column"),
-        int.class, int.class, int.class, int.class),
+        "from-row", int.class, "from-column", int.class, "to-row", int.class, "to-column", int.class),
     FILL_PATTERN((icon, contents, objects) ->
         contents.fillPattern(new Pattern<>((boolean) objects.get("wrap-around"), (String[]) objects.get("pattern"))),
-        Arrays.asList("wrap-around", "pattern"),
-        boolean.class, String[].class),
+        "wrap-around", boolean.class, "pattern", String[].class),
     FILL_PATTERN_START_INDEX((icon, contents, objects) ->
         contents.fillPattern(new Pattern<>((boolean) objects.get("wrap-around"), (String[]) objects.get("pattern")), (int) objects.get("start-index")),
-        Arrays.asList("wrap-around", "pattern", "start-index"),
-        boolean.class, String[].class, int.class),
+        "wrap-around", boolean.class, "pattern", String[].class, "start-index", int.class),
     FILL_PATTERN_START((icon, contents, objects) ->
         contents.fillPattern(new Pattern<>((boolean) objects.get("wrap-around"), (String[]) objects.get("pattern")), (int) objects.get("start-row"), (int) objects.get("start-column")),
-        Arrays.asList("wrap-around", "pattern", "start-row", "start-column"),
-        boolean.class, String[].class, int.class, int.class),
+        "wrap-around", boolean.class, "pattern", String[].class, "start-row", int.class, "start-column", int.class),
     FILL_REPEATING_PATTERN((icon, contents, objects) ->
         contents.fillPatternRepeating(new Pattern<>((boolean) objects.get("wrap-around"), (String[]) objects.get("pattern"))),
-        Arrays.asList("wrap-around", "pattern"),
-        boolean.class, String[].class),
+        "wrap-around", boolean.class, "pattern", String[].class),
     FILL_REPEATING_PATTERN_START_INDEX((icon, contents, objects) ->
         contents.fillPatternRepeating(new Pattern<>((boolean) objects.get("wrap-around"), (String[]) objects.get("pattern")), (int) objects.get("start-index"), (int) objects.get("end-index")),
-        Arrays.asList("wrap-around", "pattern", "start-index", "end-index"),
-        boolean.class, String[].class, int.class, int.class),
+        "wrap-around", boolean.class, "pattern", String[].class, "start-index", int.class, "end-index", int.class),
     FILL_REPEATING_PATTERN_START((icon, contents, objects) ->
         contents.fillPatternRepeating(new Pattern<>((boolean) objects.get("wrap-around"), (String[]) objects.get("pattern")), (int) objects.get("start-row"), (int) objects.get("start-column"), (int) objects.get("end-row"), (int) objects.get("end-column")),
-        Arrays.asList("wrap-around", "pattern", "start-row", "start-column", "end-row", "end-column"),
-        boolean.class, String[].class, int.class, int.class, int.class, int.class),
-    NONE();
+        "wrap-around", boolean.class, "pattern", String[].class, "start-row", int.class, "start-column", int.class, "end-row", int.class, "end-column", int.class),
+    NONE((left, middle, right) -> {
+    });
 
     @NotNull
     private final TriConsumer<Icon, InventoryContents, Map<String, Object>> consumer;
 
     @NotNull
-    private final List<String> keys;
+    private final Map<String, Class<?>> keyAndTypes;
 
-    @NotNull
-    private final List<Class<?>> types;
-
-    @SafeVarargs
     PlaceType(@NotNull final TriConsumer<Icon, InventoryContents, Map<String, Object>> consumer,
-              @NotNull final List<String> keys, @NotNull final Class<?>... types) {
-        this(consumer, keys, Arrays.asList(types));
-    }
-
-    @SafeVarargs
-    PlaceType(@NotNull final TriConsumer<Icon, InventoryContents, Map<String, Object>> consumer,
-              @NotNull final Class<?>... types) {
-        this(consumer, Collections.emptyList(), types);
-    }
-
-    @SafeVarargs
-    PlaceType(@NotNull final Class<?>... types) {
-        this((left, middle, right) -> {
-        }, types);
+              @NotNull final Object... objects) {
+        this(consumer, PlaceType.parse(objects));
     }
 
     @NotNull
@@ -149,57 +117,25 @@ public enum PlaceType {
             .orElse(PlaceType.NONE);
     }
 
-    public boolean control(@NotNull final List<Object> objects) {
-        if (this == PlaceType.SLOTS) {
-            return objects.isEmpty() || objects.stream()
-                .allMatch(o -> o.getClass().equals(Integer.class));
+    @NotNull
+    public static <T> Map<String, T> parse(@NotNull final Object... objects) {
+        final Map<String, T> map = new HashMap<>();
+        boolean isKey = true;
+        String previousKey = "";
+        for (final Object object : objects) {
+            if (isKey) {
+                isKey = false;
+                previousKey = (String) object;
+            } else {
+                isKey = true;
+                map.put(previousKey, (T) object);
+            }
         }
-        if (objects.size() != this.types.size()) {
-            return false;
-        }
-        if (objects.isEmpty()) {
-            return true;
-        }
-        final boolean b = IntStream.range(0, objects.size())
-            .allMatch(value -> {
-                final Object o = objects.get(value);
-                final Class<?> aClass = o.getClass();
-                final Class<?> typ = this.types.get(value);
-                return new ClassOf<>(aClass)
-                    .field("TYPE")
-                    .map(refField -> refField.of(o))
-                    .map(RefFieldExecuted::get)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .map(o1 -> o1.equals(typ))
-                    .orElse(aClass.equals(typ));
-            });
-        return b;
-    }
-
-    public void place(@NotNull final Icon icon, @NotNull final InventoryContents contents,
-                      @NotNull final Map<String, Object> objects) {
-        this.consumer.accept(icon, contents, objects);
+        return map;
     }
 
     @NotNull
-    public Map<String, Object> parse(@NotNull final Object... objects) {
-        return IntStream.range(0, this.types.size())
-            .boxed()
-            .map(index -> MapEntry.from(this.keys.get(index), objects[index]))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    }
-
-    @NotNull
-    public Map<String, Object> defaultValues() {
-        return IntStream.range(0, this.types.size())
-            .boxed()
-            .map(index -> MapEntry.from(this.keys.get(index), this.def(this.types.get(index))))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    }
-
-    @NotNull
-    private Object def(@NotNull final Class<?> type) {
+    private static Object def(@NotNull final Class<?> type) {
         if (type.equals(Integer.class)) {
             return 1;
         }
@@ -216,6 +152,47 @@ public enum PlaceType {
             return true;
         }
         return "empty";
+    }
+
+    public boolean control(@NotNull final Map<String, Object> objects) {
+        if (this == PlaceType.SLOTS) {
+            return objects.isEmpty() || objects.values().stream()
+                .allMatch(o -> Number.class.isAssignableFrom(o.getClass()));
+        }
+        if (objects.size() != this.keyAndTypes.size()) {
+            return false;
+        }
+        if (objects.isEmpty()) {
+            return true;
+        }
+        return this.keyAndTypes.entrySet().stream()
+            .allMatch(entry -> {
+                final Object o = objects.get(entry.getKey());
+                if (o == null) {
+                    return false;
+                }
+                final Class<?> aClass = o.getClass();
+                return new ClassOf<>(aClass)
+                    .field("TYPE")
+                    .map(refField -> refField.of(o))
+                    .map(RefFieldExecuted::get)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(o1 -> o1.equals(entry.getValue()))
+                    .orElse(aClass.equals(entry.getValue()));
+            });
+    }
+
+    public void place(@NotNull final Icon icon, @NotNull final InventoryContents contents,
+                      @NotNull final Map<String, Object> objects) {
+        this.consumer.accept(icon, contents, objects);
+    }
+
+    @NotNull
+    public Map<String, Object> defaultValues() {
+        return this.keyAndTypes.entrySet().stream()
+            .map(entry -> MapEntry.from(entry.getKey(), PlaceType.def(entry.getValue())))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
 }
