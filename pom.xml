@@ -94,6 +94,10 @@
             <id>bintray-tastybento-maven-repo</id>
             <url>http://dl.bintray.com/tastybento/maven-repo</url>
         </repository>
+        <repository>
+            <id>sk89q-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -274,6 +278,46 @@
             <version>0.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/FabledSkyblock.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-bukkit</artifactId>
+            <version>7.0.1</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bukkit</artifactId>
+                    <groupId>org.bukkit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>worldedit-bukkit</artifactId>
+                    <groupId>com.sk89q.worldedit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>worldedit-core</artifactId>
+                    <groupId>com.sk89q.worldedit</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-bukkit</artifactId>
+            <version>7.0.1</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bukkit</artifactId>
+                    <groupId>org.bukkit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>snakeyaml</artifactId>
+                    <groupId>org.yaml</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
