@@ -5,7 +5,6 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 import tr.com.infumia.kekoutil.Wrapped;
 
@@ -17,11 +16,8 @@ public final class PermissionsExWrapper implements Wrapped {
 
     @NotNull
     public Optional<List<String>> getGroups(@NotNull final String world, @NotNull final Player player) {
-        final PermissionUser user = this.permissionsEx.getPermissionsManager().getUser(player);
-        if (user == null) {
-            return Optional.empty();
-        }
-        return Optional.of(user.getParentIdentifiers(world));
+        return Optional.ofNullable(this.permissionsEx.getPermissionsManager().getUser(player))
+            .map(permissionUser -> permissionUser.getParentIdentifiers(world));
     }
 
     @NotNull
