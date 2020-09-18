@@ -25,12 +25,25 @@
 
 package tr.com.infumia.kekoutil;
 
+import java.util.Optional;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public interface GroupWrapped extends Wrapped {
 
     @NotNull
-    String getGroup(@NotNull Player player);
+    Optional<String> getGroup(@NotNull Player player);
+
+    @NotNull
+    Optional<String> getUserPrefix(@NotNull Player player);
+
+    @NotNull
+    Optional<String> getUserSuffix(@NotNull Player player);
+
+    @NotNull
+    Optional<String> getGroupPrefix(@NotNull String world, @NotNull String group);
+
+    @NotNull
+    Optional<String> getGroupSuffix(@NotNull String world, @NotNull String group);
 
 }
