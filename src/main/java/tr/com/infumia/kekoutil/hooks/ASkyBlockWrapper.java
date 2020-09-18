@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.UUID;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-import tr.com.infumia.kekoutil.IslandWrapped;
+import tr.com.infumia.kekoutil.Wrapped;
 
-public final class ASkyBlockWrapper implements IslandWrapped {
+public final class ASkyBlockWrapper implements Wrapped {
 
     private static final Map<Plugin, Boolean> CACHE = new HashMap<>();
 
@@ -28,22 +28,18 @@ public final class ASkyBlockWrapper implements IslandWrapped {
         ASkyBlockWrapper.CACHE.put(plugin, kekoUtil);
     }
 
-    @Override
     public long getIslandLevel(@NotNull final UUID uuid) {
         return this.skyBlockAPI.getLongIslandLevel(uuid);
     }
 
-    @Override
     public void removeIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
         this.setIslandLevel(plugin, uuid, Math.max(0L, this.getIslandLevel(uuid) - level));
     }
 
-    @Override
     public void addIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
         this.setIslandLevel(plugin, uuid, this.getIslandLevel(uuid) + level);
     }
 
-    @Override
     public void setIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
         if (!ASkyBlockWrapper.isKekoUtil(plugin)) {
             ASkyBlockWrapper.setKekoUtil(plugin, true);

@@ -1,62 +1,58 @@
 package tr.com.infumia.kekoutil.hooks;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.ChatMetaNode;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import tr.com.infumia.kekoutil.GroupWrapped;
+import tr.com.infumia.kekoutil.Wrapped;
 
 @RequiredArgsConstructor
-public final class LuckPermsWrapper implements GroupWrapped {
+public final class LuckPermsWrapper implements Wrapped {
 
     @NotNull
     private final LuckPerms luckPerms;
 
     @NotNull
-    @Override
-    public Optional<String> getGroup(@NotNull final Player player) {
+    public Optional<String> getGroup(final @NotNull String world, @NotNull final Player player) {
         return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
             .map(User::getPrimaryGroup);
     }
 
     @NotNull
-    @Override
-    public Optional<String> getUserPrefix(@NotNull final Player player) {
+    public Optional<List<String>> getUserPrefix(@NotNull final Player player) {
         return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
             .map(gr -> new ArrayList<>(gr.getNodes(NodeType.PREFIX)))
-            .filter(nodes -> !nodes.isEmpty())
-            .map(nodes -> nodes.get(0).getMetaValue());
+            .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
     }
 
     @NotNull
-    @Override
-    public Optional<String> getUserSuffix(@NotNull final Player player) {
+    public Optional<List<String>> getUserSuffix(@NotNull final Player player) {
         return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
             .map(gr -> new ArrayList<>(gr.getNodes(NodeType.SUFFIX)))
-            .filter(nodes -> !nodes.isEmpty())
-            .map(nodes -> nodes.get(0).getMetaValue());
+            .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
     }
 
     @NotNull
-    @Override
-    public Optional<String> getGroupPrefix(@NotNull final String world, @NotNull final String group) {
+    public Optional<List<String>> getGroupPrefix(@NotNull final String world, @NotNull final String group) {
         return Optional.ofNullable(this.luckPerms.getGroupManager().getGroup(group))
             .map(gr -> new ArrayList<>(gr.getNodes(NodeType.PREFIX)))
-            .filter(nodes -> !nodes.isEmpty())
-            .map(nodes -> nodes.get(0).getMetaValue());
+            .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
     }
 
     @NotNull
-    @Override
-    public Optional<String> getGroupSuffix(@NotNull final String world, @NotNull final String group) {
+    public Optional<List<String>> getGroupSuffix(@NotNull final String world, @NotNull final String group) {
         return Optional.ofNullable(this.luckPerms.getGroupManager().getGroup(group))
             .map(gr -> new ArrayList<>(gr.getNodes(NodeType.SUFFIX)))
-            .filter(nodes -> !nodes.isEmpty())
-            .map(nodes -> nodes.get(0).getMetaValue());
+            .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
     }
 
 }

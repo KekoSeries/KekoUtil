@@ -29,7 +29,6 @@ public final class GroupManagerHook implements Hook {
         if (this.groupManager == null) {
             throw new IllegalStateException("GroupManager not initiated! Use GroupManagerHook#initiate method.");
         }
-
         return new GroupManagerWrapper(this.groupManager);
     }
 

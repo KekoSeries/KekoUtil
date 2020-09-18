@@ -9,8 +9,17 @@
   <groupId>tr.com.infumia</groupId>
   <artifactId>KekoUtil</artifactId>
   <version>${version}</version>
+  <!-- Download the jar file from the spigot which is here:
+    https://www.spigotmc.org/resources/82718/
+    If it's not up to date just let me know and I will update the resource.
+  <scope>provided</scope> -->
 </dependency>
 ```
 ```gradle
 implementation("tr.com.infumia:KekoUtil:${version}")
+/* Download the jar file from the spigot which is here:
+https://www.spigotmc.org/resources/82718/
+If it's not up to date just let me know and I will update the resource.
+compileOnly("tr.com.infumia:KekoUtil:${version}")
+*/
 ```

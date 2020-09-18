@@ -1,48 +1,47 @@
 package tr.com.infumia.kekoutil.hooks;
 
+import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
-import tr.com.infumia.kekoutil.GroupWrapped;
+import tr.com.infumia.kekoutil.Wrapped;
 
-public final class PermissionsExWrapper implements GroupWrapped {
+@RequiredArgsConstructor
+public final class PermissionsExWrapper implements Wrapped {
 
     @NotNull
     private final PermissionsEx permissionsEx;
 
-    public PermissionsExWrapper(@NotNull final PermissionsEx permissionsEx) {
-        this.permissionsEx = permissionsEx;
+    @NotNull
+    public Optional<List<String>> getGroups(@NotNull final String world, @NotNull final Player player) {
+        final PermissionUser user = this.permissionsEx.getPermissionsManager().getUser(player);
+        if (user == null) {
+            return Optional.empty();
+        }
+        return Optional.of(user.getParentIdentifiers(world));
     }
 
-    @Override
     @NotNull
-    public Optional<String> getGroup(@NotNull final Player player) {
-        return Optional.ofNullable(this.permissionsEx.getPermissionsManager().getUser(player).getIdentifier());
-    }
-
-    @NotNull
-    @Override
     public Optional<String> getUserPrefix(@NotNull final Player player) {
         return Optional.ofNullable(this.permissionsEx.getPermissionsManager().getUser(player).getPrefix());
     }
 
     @NotNull
-    @Override
     public Optional<String> getUserSuffix(@NotNull final Player player) {
         return Optional.ofNullable(this.permissionsEx.getPermissionsManager().getUser(player).getSuffix());
     }
 
     @NotNull
-    @Override
     public Optional<String> getGroupPrefix(@NotNull final String world, @NotNull final String group) {
-        return Optional.ofNullable(this.permissionsEx.getPermissionsManager().getGroup(group).getPrefix());
+        return Optional.ofNullable(this.permissionsEx.getPermissionsManager().getGroup(group).getPrefix(world));
     }
 
     @NotNull
-    @Override
     public Optional<String> getGroupSuffix(@NotNull final String world, @NotNull final String group) {
-        return Optional.ofNullable(this.permissionsEx.getPermissionsManager().getGroup(group).getSuffix());
+        return Optional.ofNullable(this.permissionsEx.getPermissionsManager().getGroup(group).getSuffix(world));
     }
 
 }

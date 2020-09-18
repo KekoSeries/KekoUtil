@@ -29,6 +29,4 @@ public final class VaultWrapper implements Wrapped {
         return this.economy.getBalance(player);
     }
 
-    // TODO Add new Vault methods as you want.
-
 }

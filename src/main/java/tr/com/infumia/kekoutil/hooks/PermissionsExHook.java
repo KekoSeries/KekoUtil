@@ -28,7 +28,6 @@ public final class PermissionsExHook implements Hook {
         if (this.permissionsEx == null) {
             throw new IllegalStateException("PermissionsEx not initiated! Use PermissionsExHook#initiate method.");
         }
-
         return new PermissionsExWrapper(this.permissionsEx);
     }
 

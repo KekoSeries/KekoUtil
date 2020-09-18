@@ -9,13 +9,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-import tr.com.infumia.kekoutil.IslandWrapped;
+import tr.com.infumia.kekoutil.Wrapped;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.addons.AddonClassLoader;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
 
-public final class BentoBoxWrapper implements IslandWrapped {
+public final class BentoBoxWrapper implements Wrapped {
 
     private static final Map<Plugin, Boolean> CACHE = new HashMap<>();
 
@@ -38,7 +38,6 @@ public final class BentoBoxWrapper implements IslandWrapped {
         BentoBoxWrapper.CACHE.put(plugin, kekoUtil);
     }
 
-    @Override
     public long getIslandLevel(@NotNull final UUID uuid) {
         final AtomicLong level = new AtomicLong(0L);
         this.findFirstIsland(uuid).ifPresent(island -> {
@@ -55,17 +54,14 @@ public final class BentoBoxWrapper implements IslandWrapped {
         return level.get();
     }
 
-    @Override
     public void removeIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
         this.setIslandLevel(plugin, uuid, Math.max(0L, this.getIslandLevel(uuid) - level));
     }
 
-    @Override
     public void addIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
         this.setIslandLevel(plugin, uuid, this.getIslandLevel(uuid) + level);
     }
 
-    @Override
     public void setIslandLevel(@NotNull final Plugin plugin, @NotNull final UUID uuid, final long level) {
         this.findFirstIsland(uuid).ifPresent(island -> {
             try {
@@ -76,7 +72,6 @@ public final class BentoBoxWrapper implements IslandWrapped {
                         .getMethod("calculateIslandLevel", World.class, User.class, UUID.class)
                         .invoke(this.classLoader.getAddon(), island.getWorld(), User.getInstance(uuid), uuid);
                 }
-
                 this.classLoader
                     .findClass("world.bentobox.level.Level", false)
                     .getMethod("setIslandLevel", World.class, UUID.class, long.class)
@@ -96,7 +91,6 @@ public final class BentoBoxWrapper implements IslandWrapped {
                 return Optional.of(island);
             }
         }
-
         return Optional.empty();
     }
 
