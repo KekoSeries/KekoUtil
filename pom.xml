@@ -104,22 +104,22 @@
         <dependency>
             <groupId>io.github.portlek</groupId>
             <artifactId>configs-core</artifactId>
-            <version>4.9.9</version>
+            <version>4.9.9.1</version>
         </dependency>
         <dependency>
             <groupId>io.github.portlek</groupId>
             <artifactId>configs-yaml</artifactId>
-            <version>4.9.9</version>
+            <version>4.9.9.1</version>
         </dependency>
         <dependency>
             <groupId>io.github.portlek</groupId>
             <artifactId>configs-json</artifactId>
-            <version>4.9.9</version>
+            <version>4.9.9.1</version>
         </dependency>
         <dependency>
             <groupId>io.github.portlek</groupId>
             <artifactId>configs-bukkit</artifactId>
-            <version>4.9.9</version>
+            <version>4.9.9.1</version>
         </dependency>
         <dependency>
             <groupId>io.github.portlek</groupId>

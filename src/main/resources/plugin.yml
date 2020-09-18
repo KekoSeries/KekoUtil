@@ -12,3 +12,5 @@ softdepend:
   - BentoBox
   - ASkyBlock
   - FabledSkyblock
+  - WorldGuard
+  - WorldEdit
