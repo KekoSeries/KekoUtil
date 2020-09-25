@@ -109,7 +109,7 @@
         <dependency>
             <groupId>io.github.portlek</groupId>
             <artifactId>configs-yaml</artifactId>
-            <version>4.9.9.2</version>
+            <version>4.9.9.3</version>
         </dependency>
         <dependency>
             <groupId>io.github.portlek</groupId>
