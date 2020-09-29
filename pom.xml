@@ -35,7 +35,7 @@
     </parent>
     <groupId>tr.com.infumia</groupId>
     <artifactId>KekoUtil</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>7.5</version>
     <name>KekoUtil</name>
     <description>A plugin is a collection of libraries that provide you to write efficiently and clean code for Bukkit plugins.</description>
     <url>https://github.com/KekoSeries/KekoUtil</url>
