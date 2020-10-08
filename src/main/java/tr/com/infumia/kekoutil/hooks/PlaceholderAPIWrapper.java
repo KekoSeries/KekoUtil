@@ -7,9 +7,8 @@ import tr.com.infumia.kekoutil.Wrapped;
 
 public final class PlaceholderAPIWrapper implements Wrapped {
 
-    @NotNull
-    public String apply(@NotNull final OfflinePlayer player, @NotNull final String string) {
-        return PlaceholderAPI.setPlaceholders(player, string);
-    }
-
+  @NotNull
+  public String apply(@NotNull final OfflinePlayer player, @NotNull final String string) {
+    return PlaceholderAPI.setPlaceholders(player, string);
+  }
 }

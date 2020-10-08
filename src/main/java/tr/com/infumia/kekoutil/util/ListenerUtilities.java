@@ -38,36 +38,35 @@ import org.jetbrains.annotations.NotNull;
 @UtilityClass
 public class ListenerUtilities {
 
-    public <T extends Event> void register(@NotNull final Class<T> tClass, @NotNull final Predicate<T> predicate,
-                                           @NotNull final Consumer<T> consumer, @NotNull final Plugin plugin) {
-        ListenerUtilities.register(tClass, predicate, consumer, EventPriority.NORMAL, plugin);
-    }
+  public <T extends Event> void register(@NotNull final Class<T> tClass, @NotNull final Predicate<T> predicate,
+                                         @NotNull final Consumer<T> consumer, @NotNull final Plugin plugin) {
+    ListenerUtilities.register(tClass, predicate, consumer, EventPriority.NORMAL, plugin);
+  }
 
-    public <T extends Event> void register(@NotNull final Class<T> tClass, @NotNull final EventPriority eventPriority,
-                                           @NotNull final Consumer<T> consumer, @NotNull final Plugin plugin) {
-        ListenerUtilities.register(tClass, t -> true, consumer, eventPriority, plugin);
-    }
+  public <T extends Event> void register(@NotNull final Class<T> tClass, @NotNull final EventPriority eventPriority,
+                                         @NotNull final Consumer<T> consumer, @NotNull final Plugin plugin) {
+    ListenerUtilities.register(tClass, t -> true, consumer, eventPriority, plugin);
+  }
 
-    public <T extends Event> void register(@NotNull final Class<T> tClass, @NotNull final Consumer<T> consumer,
-                                           @NotNull final Plugin plugin) {
-        ListenerUtilities.register(tClass, t -> true, consumer, EventPriority.NORMAL, plugin);
-    }
+  public <T extends Event> void register(@NotNull final Class<T> tClass, @NotNull final Consumer<T> consumer,
+                                         @NotNull final Plugin plugin) {
+    ListenerUtilities.register(tClass, t -> true, consumer, EventPriority.NORMAL, plugin);
+  }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Event> void register(@NotNull final Class<T> tClass, @NotNull final Predicate<T> predicate,
-                                           @NotNull final Consumer<T> consumer, @NotNull final EventPriority priority,
-                                           @NotNull final Plugin plugin) {
-        Bukkit.getServer().getPluginManager().registerEvent(
-            tClass,
-            new Listener() {
-            },
-            priority,
-            (listener, event) -> {
-                if (event.getClass().equals(tClass) && predicate.test((T) event)) {
-                    consumer.accept((T) event);
-                }
-            },
-            plugin);
-    }
-
+  @SuppressWarnings("unchecked")
+  public <T extends Event> void register(@NotNull final Class<T> tClass, @NotNull final Predicate<T> predicate,
+                                         @NotNull final Consumer<T> consumer, @NotNull final EventPriority priority,
+                                         @NotNull final Plugin plugin) {
+    Bukkit.getServer().getPluginManager().registerEvent(
+      tClass,
+      new Listener() {
+      },
+      priority,
+      (listener, event) -> {
+        if (event.getClass().equals(tClass) && predicate.test((T) event)) {
+          consumer.accept((T) event);
+        }
+      },
+      plugin);
+  }
 }

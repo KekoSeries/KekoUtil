@@ -38,42 +38,40 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 public final class UpdateChecker {
 
-    @NotNull
-    private final Plugin plugin;
+  @NotNull
+  private final Plugin plugin;
 
-    private final int project;
+  private final int project;
 
-    @NotNull
-    private final String checkURL;
+  @NotNull
+  private final String checkURL;
 
-    @NotNull
-    @Getter
-    private String newVersion;
+  @NotNull
+  @Getter
+  private String newVersion;
 
-    public UpdateChecker(@NotNull final Plugin plugin, final int projectID) {
-        this(plugin, projectID, "https://api.spigotmc.org/legacy/update.php?resource=" + projectID,
-            plugin.getDescription().getVersion());
-    }
+  public UpdateChecker(@NotNull final Plugin plugin, final int projectID) {
+    this(plugin, projectID, "https://api.spigotmc.org/legacy/update.php?resource=" + projectID,
+      plugin.getDescription().getVersion());
+  }
 
-    public static UpdateChecker checkAndGet(@NotNull final Plugin plugin, final int projectID) throws IOException {
-        final UpdateChecker checker = new UpdateChecker(plugin, projectID);
-        checker.checkForUpdates();
-        return checker;
-    }
+  public static UpdateChecker checkAndGet(@NotNull final Plugin plugin, final int projectID) throws IOException {
+    final UpdateChecker checker = new UpdateChecker(plugin, projectID);
+    checker.checkForUpdates();
+    return checker;
+  }
 
-    @NotNull
-    public String getResourceURL() {
-        return "https://www.spigotmc.org/resources/" + this.project;
-    }
+  @NotNull
+  public String getResourceURL() {
+    return "https://www.spigotmc.org/resources/" + this.project;
+  }
 
-    public boolean checkForUpdates() throws IOException {
-        final URLConnection con = new URL(this.checkURL).openConnection();
-        this.newVersion = new BufferedReader(
-            new InputStreamReader(
-                con.getInputStream()))
-            .readLine();
-
-        return !this.plugin.getDescription().getVersion().equals(this.newVersion);
-    }
-
+  public boolean checkForUpdates() throws IOException {
+    final URLConnection con = new URL(this.checkURL).openConnection();
+    this.newVersion = new BufferedReader(
+      new InputStreamReader(
+        con.getInputStream()))
+      .readLine();
+    return !this.plugin.getDescription().getVersion().equals(this.newVersion);
+  }
 }

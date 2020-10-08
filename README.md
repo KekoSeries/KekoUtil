@@ -3,7 +3,9 @@
 
 [![Build Status](https://travis-ci.com/KekoSeries/KekoUtil.svg?branch=master)](https://travis-ci.com/KekoSeries/KekoUtil)
 ![Maven Central](https://img.shields.io/maven-central/v/tr.com.infumia/KekoUtil?label=version)
+
 ## How to Use
+
 ```xml
 <dependency>
   <groupId>tr.com.infumia</groupId>
@@ -15,6 +17,7 @@
   <scope>provided</scope> -->
 </dependency>
 ```
+
 ```gradle
 implementation("tr.com.infumia:KekoUtil:${version}")
 /* Download the jar file from the spigot which is here:

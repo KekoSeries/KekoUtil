@@ -35,35 +35,34 @@ import org.jetbrains.annotations.NotNull;
 @UtilityClass
 public class InventoryUtilities {
 
-    public boolean isInventoryNotFull(@NotNull final Player player, @NotNull final ItemStack item) {
-        return !InventoryUtilities.isInventoryFull(player, item);
-    }
+  public boolean isInventoryNotFull(@NotNull final Player player, @NotNull final ItemStack item) {
+    return !InventoryUtilities.isInventoryFull(player, item);
+  }
 
-    public boolean isInventoryFull(@NotNull final Player player, @NotNull final ItemStack item) {
-        if (item.getType() == Material.AIR) {
-            return false;
-        }
-        if (item.getAmount() > 5000) {
-            return true;
-        }
-        if (player.getInventory().firstEmpty() >= 0 && item.getAmount() <= item.getMaxStackSize()) {
-            return false;
-        }
-        if (item.getAmount() > item.getMaxStackSize()) {
-            final ItemStack clone = item.clone();
-            clone.setAmount(item.getMaxStackSize());
-            if (InventoryUtilities.isInventoryFull(player, clone)) {
-                return true;
-            }
-            clone.setAmount(item.getAmount() - item.getMaxStackSize());
-            return InventoryUtilities.isInventoryFull(player, clone);
-        }
-        final Map<Integer, ? extends ItemStack> all = player.getInventory().all(item);
-        int amount = item.getAmount();
-        for (final ItemStack element : all.values()) {
-            amount -= element.getMaxStackSize() - element.getAmount();
-        }
-        return amount > 0;
+  public boolean isInventoryFull(@NotNull final Player player, @NotNull final ItemStack item) {
+    if (item.getType() == Material.AIR) {
+      return false;
     }
-
+    if (item.getAmount() > 5000) {
+      return true;
+    }
+    if (player.getInventory().firstEmpty() >= 0 && item.getAmount() <= item.getMaxStackSize()) {
+      return false;
+    }
+    if (item.getAmount() > item.getMaxStackSize()) {
+      final ItemStack clone = item.clone();
+      clone.setAmount(item.getMaxStackSize());
+      if (InventoryUtilities.isInventoryFull(player, clone)) {
+        return true;
+      }
+      clone.setAmount(item.getAmount() - item.getMaxStackSize());
+      return InventoryUtilities.isInventoryFull(player, clone);
+    }
+    final Map<Integer, ? extends ItemStack> all = player.getInventory().all(item);
+    int amount = item.getAmount();
+    for (final ItemStack element : all.values()) {
+      amount -= element.getMaxStackSize() - element.getAmount();
+    }
+    return amount > 0;
+  }
 }

@@ -39,67 +39,66 @@ import tr.com.infumia.kekoutil.Wrapped;
 @UtilityClass
 public class Hooks {
 
-    private final Map<String, Wrapped> WRAPPERS = new HashMap<>();
+  private final Map<String, Wrapped> WRAPPERS = new HashMap<>();
 
-    @NotNull
-    public Optional<VaultWrapper> getVault() {
-        return Hooks.getWrapper(VaultHook.VAULT_ID);
-    }
+  @NotNull
+  public Optional<VaultWrapper> getVault() {
+    return Hooks.getWrapper(VaultHook.VAULT_ID);
+  }
 
-    @NotNull
-    public Optional<PlaceholderAPIWrapper> getPlaceholderAPI() {
-        return Hooks.getWrapper(PlaceholderAPIHook.PLACEHOLDERAPI_ID);
-    }
+  @NotNull
+  public Optional<PlaceholderAPIWrapper> getPlaceholderAPI() {
+    return Hooks.getWrapper(PlaceholderAPIHook.PLACEHOLDERAPI_ID);
+  }
 
-    @NotNull
-    public Optional<LuckPermsWrapper> getLuckPerms() {
-        return Hooks.getWrapper(LuckPermsHook.LUCKPERMS_ID);
-    }
+  @NotNull
+  public Optional<LuckPermsWrapper> getLuckPerms() {
+    return Hooks.getWrapper(LuckPermsHook.LUCKPERMS_ID);
+  }
 
-    @NotNull
-    public Optional<ASkyBlockWrapper> getASkyBlock() {
-        return Hooks.getWrapper(ASkyBlockHook.ASKYBLOCK_ID);
-    }
+  @NotNull
+  public Optional<ASkyBlockWrapper> getASkyBlock() {
+    return Hooks.getWrapper(ASkyBlockHook.ASKYBLOCK_ID);
+  }
 
-    @NotNull
-    public Optional<BentoBoxWrapper> getBentoBox() {
-        return Hooks.getWrapper(BentoBoxHook.BENTOBOX_ID);
-    }
+  @NotNull
+  public Optional<BentoBoxWrapper> getBentoBox() {
+    return Hooks.getWrapper(BentoBoxHook.BENTOBOX_ID);
+  }
 
-    @NotNull
-    public Optional<FabledSkyblockWrapper> getFabledSkyblock() {
-        return Hooks.getWrapper(FabledSkyblockHook.FABLEDSKYBLOCK_ID);
-    }
+  @NotNull
+  public Optional<FabledSkyblockWrapper> getFabledSkyblock() {
+    return Hooks.getWrapper(FabledSkyblockHook.FABLEDSKYBLOCK_ID);
+  }
 
-    @NotNull
-    public Optional<GroupManagerWrapper> getGroupManager() {
-        return Hooks.getWrapper(GroupManagerHook.GROUPMANAGER_ID);
-    }
+  @NotNull
+  public Optional<GroupManagerWrapper> getGroupManager() {
+    return Hooks.getWrapper(GroupManagerHook.GROUPMANAGER_ID);
+  }
 
-    @NotNull
-    public Optional<PermissionsExWrapper> getPermissionsEx() {
-        return Hooks.getWrapper(PermissionsExHook.PERMISSONSEX_ID);
-    }
+  @NotNull
+  public Optional<PermissionsExWrapper> getPermissionsEx() {
+    return Hooks.getWrapper(PermissionsExHook.PERMISSONSEX_ID);
+  }
 
-    public void loadHooks() {
-        Stream.of(new LuckPermsHook(), new PlaceholderAPIHook(), new VaultHook(), new ASkyBlockHook(),
-            new BentoBoxHook(), new FabledSkyblockHook(), new GroupManagerHook(), new PermissionsExHook())
-            .filter(Hook::initiate)
-            .forEach(hook -> Hooks.WRAPPERS.put(hook.id(), hook.create()));
-        Hooks.WRAPPERS.keySet().forEach(Hooks::sendHookNotify);
-    }
+  public void loadHooks() {
+    Stream.of(new LuckPermsHook(), new PlaceholderAPIHook(), new VaultHook(), new ASkyBlockHook(),
+      new BentoBoxHook(), new FabledSkyblockHook(), new GroupManagerHook(), new PermissionsExHook())
+      .filter(Hook::initiate)
+      .forEach(hook -> Hooks.WRAPPERS.put(hook.id(), hook.create()));
+    Hooks.WRAPPERS.keySet().forEach(Hooks::sendHookNotify);
+  }
 
-    @NotNull
-    @SuppressWarnings("unchecked")
-    private <T extends Wrapped> Optional<T> getWrapper(@NotNull final String wrappedId) {
-        return Optional.ofNullable(Hooks.WRAPPERS.get(wrappedId))
-            .map(o -> (T) o);
-    }
+  @NotNull
+  @SuppressWarnings("unchecked")
+  private <T extends Wrapped> Optional<T> getWrapper(@NotNull final String wrappedId) {
+    return Optional.ofNullable(Hooks.WRAPPERS.get(wrappedId))
+      .map(o -> (T) o);
+  }
 
-    private void sendHookNotify(@NotNull final String id) {
-        Bukkit.getConsoleSender().sendMessage(
-            ColorUtil.colored(
-                id + " is hooking"));
-    }
-
+  private void sendHookNotify(@NotNull final String id) {
+    Bukkit.getConsoleSender().sendMessage(
+      ColorUtil.colored(
+        id + " is hooking"));
+  }
 }

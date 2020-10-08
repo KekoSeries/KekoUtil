@@ -39,50 +39,49 @@ import tr.com.infumia.kekoutil.util.PlaceType;
 
 public final class FileElementProvider implements Provided<FileElement> {
 
-    @Override
-    public void set(@NotNull final FileElement fileElement, @NotNull final CfgSection section,
-                    @NotNull final String path) {
-        final String dot = GeneralUtilities.putDot(path);
-        ((BkktSection) section).setItemStack(dot + "item", fileElement.itemStack());
-        section.set(dot + "type", fileElement.type().name());
-        section.remove(dot + "values");
-        fileElement.values().forEach((s, o) ->
-            section.set(dot + "values." + s, o));
-    }
+  @Override
+  public void set(@NotNull final FileElement fileElement, @NotNull final CfgSection section,
+                  @NotNull final String path) {
+    final String dot = GeneralUtilities.putDot(path);
+    ((BkktSection) section).setItemStack(dot + "item", fileElement.itemStack());
+    section.set(dot + "type", fileElement.type().name());
+    section.remove(dot + "values");
+    fileElement.values().forEach((s, o) ->
+      section.set(dot + "values." + s, o));
+  }
 
-    @NotNull
-    @Override
-    public Optional<FileElement> getWithField(@NotNull final FileElement fileElement,
-                                              @NotNull final CfgSection section, @NotNull final String path) {
-        return this.get(section, path)
-            .map(element -> element.changeEvent(fileElement.events()));
-    }
+  @NotNull
+  @Override
+  public Optional<FileElement> getWithField(@NotNull final FileElement fileElement,
+                                            @NotNull final CfgSection section, @NotNull final String path) {
+    return this.get(section, path)
+      .map(element -> element.changeEvent(fileElement.events()));
+  }
 
-    @NotNull
-    @Override
-    public Optional<FileElement> get(@NotNull final CfgSection section, @NotNull final String path) {
-        final String dot = GeneralUtilities.putDot(path);
-        final Optional<ItemStack> itemStackOptional = ((BkktSection) section).getItemStack(dot + "item");
-        final Optional<String> typeOptional = section.getString(dot + "type");
-        if (!itemStackOptional.isPresent() || !typeOptional.isPresent()) {
-            return Optional.empty();
-        }
-        final PlaceType type = PlaceType.fromString(typeOptional.get());
-        final Map<String, Object> values = section.getSection(dot + "values")
-            .map(CfgSection::getConfigurationSection)
-            .map(configurationSection -> configurationSection.getMapValues(false))
-            .orElse(new HashMap<>());
-        if (type.control(values)) {
-            return Optional.of(FileElement.from(itemStackOptional.get(), type, values));
-        }
-        final Map<String, Object> defaults = type.defaultValues();
-        if (defaults.isEmpty()) {
-            section.remove(dot + "values");
-        } else {
-            defaults.forEach((s, o) ->
-                section.set(dot + "values." + s, o));
-        }
-        return Optional.empty();
+  @NotNull
+  @Override
+  public Optional<FileElement> get(@NotNull final CfgSection section, @NotNull final String path) {
+    final String dot = GeneralUtilities.putDot(path);
+    final Optional<ItemStack> itemStackOptional = ((BkktSection) section).getItemStack(dot + "item");
+    final Optional<String> typeOptional = section.getString(dot + "type");
+    if (!itemStackOptional.isPresent() || !typeOptional.isPresent()) {
+      return Optional.empty();
     }
-
+    final PlaceType type = PlaceType.fromString(typeOptional.get());
+    final Map<String, Object> values = section.getSection(dot + "values")
+      .map(CfgSection::getConfigurationSection)
+      .map(configurationSection -> configurationSection.getMapValues(false))
+      .orElse(new HashMap<>());
+    if (type.control(values)) {
+      return Optional.of(FileElement.from(itemStackOptional.get(), type, values));
+    }
+    final Map<String, Object> defaults = type.defaultValues();
+    if (defaults.isEmpty()) {
+      section.remove(dot + "values");
+    } else {
+      defaults.forEach((s, o) ->
+        section.set(dot + "values." + s, o));
+    }
+    return Optional.empty();
+  }
 }

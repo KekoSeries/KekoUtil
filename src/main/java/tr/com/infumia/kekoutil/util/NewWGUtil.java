@@ -16,36 +16,35 @@ import org.jetbrains.annotations.NotNull;
 @UtilityClass
 public class NewWGUtil {
 
-    public boolean canBuild(@NotNull final Player player, @NotNull final Location location) {
-        return NewWGUtil.hasBypass(player, location) ||
-            WorldGuard
-                .getInstance()
-                .getPlatform()
-                .getRegionContainer()
-                .createQuery()
-                .testState(
-                    BukkitAdapter.adapt(location),
-                    NewWGUtil.getLocalPlayer(player),
-                    Flags.BUILD);
-    }
+  public boolean canBuild(@NotNull final Player player, @NotNull final Location location) {
+    return NewWGUtil.hasBypass(player, location) ||
+      WorldGuard
+        .getInstance()
+        .getPlatform()
+        .getRegionContainer()
+        .createQuery()
+        .testState(
+          BukkitAdapter.adapt(location),
+          NewWGUtil.getLocalPlayer(player),
+          Flags.BUILD);
+  }
 
-    public boolean hasBypass(@NotNull final Player player, @NotNull final Location location) {
-        return Optional.ofNullable(location.getWorld())
-            .map(world ->
-                WorldGuard.getInstance().getPlatform().getSessionManager().hasBypass(
-                    NewWGUtil.getLocalPlayer(player),
-                    NewWGUtil.getLocalWorld(world)))
-            .orElse(true);
-    }
+  public boolean hasBypass(@NotNull final Player player, @NotNull final Location location) {
+    return Optional.ofNullable(location.getWorld())
+      .map(world ->
+        WorldGuard.getInstance().getPlatform().getSessionManager().hasBypass(
+          NewWGUtil.getLocalPlayer(player),
+          NewWGUtil.getLocalWorld(world)))
+      .orElse(true);
+  }
 
-    @NotNull
-    private LocalPlayer getLocalPlayer(@NotNull final Player player) {
-        return WorldGuardPlugin.inst().wrapPlayer(player);
-    }
+  @NotNull
+  private LocalPlayer getLocalPlayer(@NotNull final Player player) {
+    return WorldGuardPlugin.inst().wrapPlayer(player);
+  }
 
-    @NotNull
-    private World getLocalWorld(@NotNull final org.bukkit.World world) {
-        return new BukkitWorld(world);
-    }
-
+  @NotNull
+  private World getLocalWorld(@NotNull final org.bukkit.World world) {
+    return new BukkitWorld(world);
+  }
 }

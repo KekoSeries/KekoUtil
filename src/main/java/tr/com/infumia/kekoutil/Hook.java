@@ -29,12 +29,11 @@ import org.jetbrains.annotations.NotNull;
 
 public interface Hook {
 
-    @NotNull
-    String id();
+  @NotNull
+  String id();
 
-    boolean initiate();
+  boolean initiate();
 
-    @NotNull
-    Wrapped create();
-
+  @NotNull
+  Wrapped create();
 }

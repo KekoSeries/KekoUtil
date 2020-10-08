@@ -16,41 +16,40 @@ import tr.com.infumia.kekoutil.Wrapped;
 @RequiredArgsConstructor
 public final class LuckPermsWrapper implements Wrapped {
 
-    @NotNull
-    private final LuckPerms luckPerms;
+  @NotNull
+  private final LuckPerms luckPerms;
 
-    @NotNull
-    public Optional<String> getGroup(final @NotNull String world, @NotNull final Player player) {
-        return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
-            .map(User::getPrimaryGroup);
-    }
+  @NotNull
+  public Optional<String> getGroup(final @NotNull String world, @NotNull final Player player) {
+    return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
+      .map(User::getPrimaryGroup);
+  }
 
-    @NotNull
-    public Optional<List<String>> getUserPrefix(@NotNull final Player player) {
-        return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
-            .map(gr -> new ArrayList<>(gr.getNodes(NodeType.PREFIX)))
-            .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
-    }
+  @NotNull
+  public Optional<List<String>> getUserPrefix(@NotNull final Player player) {
+    return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
+      .map(gr -> new ArrayList<>(gr.getNodes(NodeType.PREFIX)))
+      .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
+  }
 
-    @NotNull
-    public Optional<List<String>> getUserSuffix(@NotNull final Player player) {
-        return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
-            .map(gr -> new ArrayList<>(gr.getNodes(NodeType.SUFFIX)))
-            .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
-    }
+  @NotNull
+  public Optional<List<String>> getUserSuffix(@NotNull final Player player) {
+    return Optional.ofNullable(this.luckPerms.getUserManager().getUser(player.getUniqueId()))
+      .map(gr -> new ArrayList<>(gr.getNodes(NodeType.SUFFIX)))
+      .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
+  }
 
-    @NotNull
-    public Optional<List<String>> getGroupPrefix(@NotNull final String world, @NotNull final String group) {
-        return Optional.ofNullable(this.luckPerms.getGroupManager().getGroup(group))
-            .map(gr -> new ArrayList<>(gr.getNodes(NodeType.PREFIX)))
-            .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
-    }
+  @NotNull
+  public Optional<List<String>> getGroupPrefix(@NotNull final String world, @NotNull final String group) {
+    return Optional.ofNullable(this.luckPerms.getGroupManager().getGroup(group))
+      .map(gr -> new ArrayList<>(gr.getNodes(NodeType.PREFIX)))
+      .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
+  }
 
-    @NotNull
-    public Optional<List<String>> getGroupSuffix(@NotNull final String world, @NotNull final String group) {
-        return Optional.ofNullable(this.luckPerms.getGroupManager().getGroup(group))
-            .map(gr -> new ArrayList<>(gr.getNodes(NodeType.SUFFIX)))
-            .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
-    }
-
+  @NotNull
+  public Optional<List<String>> getGroupSuffix(@NotNull final String world, @NotNull final String group) {
+    return Optional.ofNullable(this.luckPerms.getGroupManager().getGroup(group))
+      .map(gr -> new ArrayList<>(gr.getNodes(NodeType.SUFFIX)))
+      .map(nodes -> nodes.stream().map(ChatMetaNode::getMetaValue).collect(Collectors.toList()));
+  }
 }

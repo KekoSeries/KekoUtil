@@ -7,33 +7,30 @@ import tr.com.infumia.kekoutil.Hook;
 
 public final class ASkyBlockHook implements Hook {
 
-    public static final String ASKYBLOCK_ID = "ASkyBlock";
+  public static final String ASKYBLOCK_ID = "ASkyBlock";
 
-    private ASkyBlockAPI skyBlockAPI;
+  private ASkyBlockAPI skyBlockAPI;
 
-    @NotNull
-    @Override
-    public String id() {
-        return ASkyBlockHook.ASKYBLOCK_ID;
+  @NotNull
+  @Override
+  public String id() {
+    return ASkyBlockHook.ASKYBLOCK_ID;
+  }
+
+  @Override
+  public boolean initiate() {
+    if (Bukkit.getPluginManager().getPlugin("ASkyBlock") != null) {
+      this.skyBlockAPI = ASkyBlockAPI.getInstance();
     }
+    return this.skyBlockAPI != null;
+  }
 
-    @Override
-    public boolean initiate() {
-        if (Bukkit.getPluginManager().getPlugin("ASkyBlock") != null) {
-            this.skyBlockAPI = ASkyBlockAPI.getInstance();
-        }
-
-        return this.skyBlockAPI != null;
+  @NotNull
+  @Override
+  public ASkyBlockWrapper create() {
+    if (this.skyBlockAPI == null) {
+      throw new IllegalStateException("ASkyBlock not initiated! Use ASkyBlockHook#initiate() method.");
     }
-
-    @NotNull
-    @Override
-    public ASkyBlockWrapper create() {
-        if (this.skyBlockAPI == null) {
-            throw new IllegalStateException("ASkyBlock not initiated! Use ASkyBlockHook#initiate() method.");
-        }
-
-        return new ASkyBlockWrapper(this.skyBlockAPI);
-    }
-
+    return new ASkyBlockWrapper(this.skyBlockAPI);
+  }
 }
