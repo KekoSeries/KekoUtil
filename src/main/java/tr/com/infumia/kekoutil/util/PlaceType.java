@@ -42,7 +42,7 @@ public enum PlaceType {
 
   SLOTS((icon, contents, objects) ->
     objects.values().stream()
-      .map(o -> o)
+      .map(o -> (List<Integer>) o)
       .forEach(slots ->
         slots.forEach(slot ->
           contents.set(slot, icon))),
