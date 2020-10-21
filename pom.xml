@@ -30,7 +30,7 @@
   <parent>
     <groupId>io.github.portlek</groupId>
     <artifactId>ppom</artifactId>
-    <version>1.8.18</version>
+    <version>1.8.19</version>
   </parent>
   <groupId>tr.com.infumia</groupId>
   <artifactId>KekoUtil</artifactId>
