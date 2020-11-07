@@ -27,17 +27,16 @@ package tr.com.infumia.kekoutil.hooks;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import lombok.experimental.UtilityClass;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import tr.com.infumia.kekoutil.Wrapped;
 
-public final class Groups {
+@UtilityClass
+public class Groups {
 
-  private Groups() {
-  }
-
-  public static boolean containsGroup(@NotNull final Wrapped wrapper, @NotNull final String group,
-                                      @NotNull final Player player) {
+  public boolean containsGroup(@NotNull final Wrapped wrapper, @NotNull final String group,
+                               @NotNull final Player player) {
     if (wrapper instanceof GroupManagerWrapper) {
       return ((GroupManagerWrapper) wrapper).getGroup(player.getWorld().getName(), player)
         .orElse("")
@@ -57,7 +56,7 @@ public final class Groups {
   }
 
   @NotNull
-  public static Optional<String> getFirstGroup(@NotNull final Wrapped wrapper, @NotNull final Player player) {
+  public Optional<String> getFirstGroup(@NotNull final Wrapped wrapper, @NotNull final Player player) {
     if (wrapper instanceof GroupManagerWrapper) {
       return ((GroupManagerWrapper) wrapper).getGroup(player.getWorld().getName(), player);
     }
